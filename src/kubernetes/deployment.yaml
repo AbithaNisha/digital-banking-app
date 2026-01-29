@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digital-banking-app
+spec:
+  replicas: 2                # Run 2 copies of your app
+  selector:
+    matchLabels:
+      app: digital-banking-app
+  template:
+    metadata:
+      labels:
+        app: digital-banking-app
+    spec:
+      containers:
+      - name: digital-banking-app
+        image: yourdockerhubusername/digital-banking-app:latest  # Replace with your Docker Hub username
+        ports:
+        - containerPort: 3000    # Port your Node.js app runs on
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: digital-banking-app-service
+spec:
+  type: NodePort
+  selector:
+    app: digital-banking-app
+  ports:
+    - protocol: TCP
+      port: 80         # Expose port 80 outside
+      targetPort: 3000 # Map to container port
