@@ -14,8 +14,8 @@ pipeline {
         }
         stage('Docker Build & Push') {
             steps {
-                bat 'docker build -t yourdockerhubusername/digital-banking-app:latest .'
-                bat 'docker push yourdockerhubusername/digital-banking-app:latest'
+                bat 'docker build -t abithanisha/digital-banking-app:latest .'
+                bat 'docker push abithanisha/digital-banking-app:latest'
             }
         }
         stage('Deploy to Kubernetes') {
