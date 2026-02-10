@@ -1,47 +1,27 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "digital-banking-app"
-        DOCKER_TAG = "latest"
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Install') {
             steps {
-                echo 'Checking out code...'
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Installing Node.js dependencies...'
                 sh 'npm install'
             }
         }
-
-        stage('Docker Build') {
+        stage('Build') {
             steps {
-                echo 'Building Docker image...'
-                sh "docker build -t $IMAGE_NAME:$DOCKER_TAG ."
+                sh 'echo "No build needed for simple HTML/JS app"'
             }
         }
-
+        stage('Docker Build & Push') {
+            steps {
+                sh 'docker build -t yourdockerhubusername/digital-banking-app:latest .'
+                sh 'docker push yourdockerhubusername/digital-banking-app:latest'
+            }
+        }
         stage('Deploy to Kubernetes') {
             steps {
-                echo 'Applying Kubernetes deployment...'
-                sh "kubectl apply -f src/kubernetes/deployment.yaml || echo 'Kubernetes not available, skipping'"
+                sh 'kubectl apply -f src/kubernetes/deployment.yaml'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline finished successfully!'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
