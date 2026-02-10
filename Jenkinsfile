@@ -4,23 +4,23 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         stage('Build') {
             steps {
-                sh 'echo "No build needed for simple HTML/JS app"'
+                bat 'echo "No build needed for simple HTML/JS app"'
             }
         }
         stage('Docker Build & Push') {
             steps {
-                sh 'docker build -t yourdockerhubusername/digital-banking-app:latest .'
-                sh 'docker push yourdockerhubusername/digital-banking-app:latest'
+                bat 'docker build -t yourdockerhubusername/digital-banking-app:latest .'
+                bat 'docker push yourdockerhubusername/digital-banking-app:latest'
             }
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f src/kubernetes/deployment.yaml'
+                bat 'kubectl apply -f src/kubernetes/deployment.yaml'
             }
         }
     }
