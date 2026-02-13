@@ -23,10 +23,10 @@ pipeline {
                 }
             }
         }
-       stage('Deploy App') {
+      stage('Deploy App') {
     steps {
-        // Pazhaya kubernetes command-ah remove pannittu idhai podunga
-        bat 'docker run -d -p 3000:3000 abithanisha/digital-banking-app:latest'
+        // Port 3000-ku badhula 3001 use panrom
+        bat 'docker run -d -p 3001:3000 abithanisha/digital-banking-app:latest'
     }
 }
     }
