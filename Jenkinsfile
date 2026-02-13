@@ -22,7 +22,7 @@ pipeline {
                     "-Dsonar.projectKey=digital-banking-app " +
                     "-Dsonar.sources=. " +
                     "-Dsonar.host.url=http://localhost:9000 " +
-                    "-Dsonar.token=sqp_b510422b58ea5b24d48e551cc1fe203a411100b5
+                    "-Dsonar.token=sqp_b510422b58ea5b24d48e551cc1fe203a411100b5"
 
 " // Inga neenga Notepad-la save panna token-ah paste pannunga
                 }
