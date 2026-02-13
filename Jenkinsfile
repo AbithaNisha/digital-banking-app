@@ -18,7 +18,7 @@ pipeline {
                     withEnv(["JAVA_HOME=${javaHome}"]) {
                         withSonarQubeEnv('sonar-server') {
                             // Inga unga token-ah sariyaa replace panniyachaen
-                            bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=digital-banking-app -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_b510422b58ea5b24d48e551cc1fe203a411100b5"
+                            bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=digital-banking-app -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=squ_847d505bc329502808a666662c404c8e046ddae6"
                         }
                     }
                 }
