@@ -13,17 +13,16 @@ pipeline {
     steps {
         script {
             def scannerHome = tool 'sonar-scanner'
-            // Inga 'jdk21' nu neenga Tools-la kudutha peyar-ah kudunga
             def javaHome = tool 'jdk21' 
             
             withEnv(["JAVA_HOME=${javaHome}"]) {
+                // Inga 'sonar-server' neenga Jenkins System-la kudutha peyar
                 withSonarQubeEnv('sonar-server') {
                     bat "${scannerHome}/bin/sonar-scanner " +
                     "-Dsonar.projectKey=digital-banking-app " +
                     "-Dsonar.sources=. " +
                     "-Dsonar.host.url=http://localhost:9000 " +
-                    "-Dsonar.login=admin " +
-                    "-Dsonar.password=admin" 
+                    "-Dsonar.token=sqp_a1b2c3d4e5f6..." // Inga neenga Notepad-la save panna token-ah paste pannunga
                 }
             }
         }
