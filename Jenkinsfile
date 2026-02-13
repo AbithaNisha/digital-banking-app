@@ -10,23 +10,25 @@ pipeline {
         
         // --- Pudhu Stage Start ---
         stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Jenkins Tools-la neenga kudutha 'sonar-scanner' peyar correct-aa irukkanum
-                    def scannerHome = tool 'sonar-scanner' 
-                    
-                    // Jenkins System-la neenga kudutha 'sonar-server' peyar correct-aa irukkanum
-                    withSonarQubeEnv('sonar-server') {
-                        bat "${scannerHome}/bin/sonar-scanner " +
-                        "-Dsonar.projectKey=digital-banking-app " +
-                        "-Dsonar.sources=. " +
-                        "-Dsonar.host.url=http://localhost:9000 " +
-                        "-Dsonar.login=admin " +
-                        "-Dsonar.password=admin" 
-                    }
+    steps {
+        script {
+            def scannerHome = tool 'sonar-scanner'
+            // Inga 'jdk21' nu neenga Tools-la kudutha peyar-ah kudunga
+            def javaHome = tool 'jdk21' 
+            
+            withEnv(["JAVA_HOME=${javaHome}"]) {
+                withSonarQubeEnv('sonar-server') {
+                    bat "${scannerHome}/bin/sonar-scanner " +
+                    "-Dsonar.projectKey=digital-banking-app " +
+                    "-Dsonar.sources=. " +
+                    "-Dsonar.host.url=http://localhost:9000 " +
+                    "-Dsonar.login=admin " +
+                    "-Dsonar.password=admin" 
                 }
             }
         }
+    }
+}
         // --- Pudhu Stage End ---
 
         stage('Build') {
