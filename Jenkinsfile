@@ -23,10 +23,11 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                bat 'kubectl apply -f src/kubernetes/deployment.yaml'
-            }
-        }
+       stage('Deploy App') {
+    steps {
+        // Pazhaya kubernetes command-ah remove pannittu idhai podunga
+        bat 'docker run -d -p 3000:3000 abithanisha/digital-banking-app:latest'
+    }
+}
     }
 }
