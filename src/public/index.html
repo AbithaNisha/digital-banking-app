@@ -46,19 +46,37 @@
             <p onclick="showWelcome()" class="back-link">← Back to Home</p>
         </div>
 
-        <div id="dashboard" class="glass-form" style="display: none; width: 500px;">
+       <div id="dashboard" class="glass-form" style="display: none; width: 600px;">
             <h2>Welcome, <span id="user-display">User</span></h2>
             <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
             
             <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                <p>Available Balance</p>
+                <p>Current Balance</p>
                 <h1 id="balance-display">₹ 5,000.00</h1>
             </div>
             
             <div style="display: flex; gap: 10px;">
-                <button class="primary-btn" style="background: #28a745; flex: 1; margin:0;" onclick="doTransaction('Deposit')">Deposit</button>
-                <button class="primary-btn" style="background: #dc3545; flex: 1; margin:0;" onclick="doTransaction('Withdraw')">Withdraw</button>
+                <button class="primary-btn" style="background: #28a745; flex: 1; margin:0;" onclick="doTransaction('Credit')">➕ Credit</button>
+                <button class="primary-btn" style="background: #dc3545; flex: 1; margin:0;" onclick="doTransaction('Debit')">➖ Debit</button>
             </div>
+
+            <div style="margin-top: 25px; text-align: left;">
+                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;">Recent Transactions</h3>
+                <div style="max-height: 150px; overflow-y: auto;">
+                    <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;" id="history-table">
+                        <thead>
+                            <tr style="opacity: 0.6; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <th style="text-align: left; padding: 5px;">Time</th>
+                                <th style="text-align: left; padding: 5px;">Type</th>
+                                <th style="text-align: right; padding: 5px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-rows">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
             <p onclick="location.reload()" class="back-link" style="margin-top: 20px;">Logout</p>
         </div>
     </div>
@@ -117,21 +135,45 @@
             }
         }
 
-        // Transaction Logic
+        // Updated Transaction Logic with History
         function doTransaction(type) {
             let amount = prompt(`Enter amount to ${type}:`);
             if (amount && !isNaN(amount) && amount > 0) {
                 let numAmount = Number(amount);
-                if (type === 'Withdraw' && numAmount > currentBalance) {
+                
+                if (type === 'Debit' && numAmount > currentBalance) {
                     alert("Insufficient funds! (Kashu pathala!)");
-                } else {
-                    currentBalance = (type === 'Deposit') ? currentBalance + numAmount : currentBalance - numAmount;
-                    document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
-                    alert(`${type} of ₹${numAmount} successful!`);
+                    return;
                 }
+
+                // Balance Update
+                currentBalance = (type === 'Credit') ? currentBalance + numAmount : currentBalance - numAmount;
+                document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
+
+                // Add to History Table
+                addHistoryRow(type, numAmount);
+                
+                alert(`${type} of ₹${numAmount} successful!`);
             } else if (amount !== null) {
                 alert("Please enter a valid amount!");
             }
+        }
+
+        function addHistoryRow(type, amount) {
+            const tbody = document.getElementById('transaction-rows');
+            const row = tbody.insertRow(0); // Pudhu transaction-a mela add pannum
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const color = (type === 'Credit') ? '#28a745' : '#dc3545';
+            const sign = (type === 'Credit') ? '+' : '-';
+
+            row.innerHTML = `
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.7;">${time}</td>
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 500;">${type}</td>
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: ${color}; font-weight: bold;">
+                    ${sign} ₹${amount.toLocaleString()}
+                </td>
+            `;
         }
     </script>
 </body>
