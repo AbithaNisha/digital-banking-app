@@ -1,9 +1,30 @@
+/* Etha unga style.css-la add panni paarunga */
 body {
-    font-family: Arial;
-    text-align: center;
-    padding: 50px;
-    background-color: #f0f4f8;
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-h1 {
-    color: #0b5ed7;
+
+.header {
+    background-color: #003366; /* Deep Bank Blue */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    margin: 50px auto;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
