@@ -1,26 +1,16 @@
 const express = require('express');
-const path = require('path');
+const path = require('path'); // Indha line dhaan file path-ai kandupidikka dhedhum
 const app = express();
 const PORT = 3000;
 
-// Static files (CSS, Images) load aaga
-app.use(express.static(path.join(__dirname, 'public')));
+// 'src/public' folder-la irukura style.css, script.js maari files-ai load panna
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 
-// 1. Home Page
+// Browser-la localhost:3001 nu adikkumpodhu index.html-ai kaatta indha code venum
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
-// 2. Login Page
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/login.html'));
-});
-
-// 3. Dashboard (Transaction Page)
-app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/dashboard.html'));
+    res.sendFile(path.join(__dirname, 'src', 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log(`UBI Bank App running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
