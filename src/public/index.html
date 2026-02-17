@@ -9,186 +9,113 @@
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="logo">UBI <span>Bank</span></div>
-        <div class="nav-links">
-            <a href="#" onclick="showSection('welcome-section')">Home</a>
-            <a href="#" class="nav-btn" onclick="showSection('login-form')">Login</a>
-            <a href="#" class="nav-btn" onclick="showSection('signup-form')" style="background: #28a745;">Signup</a>
-        </div>
-    </div>
-
     <div class="hero-container">
-        <div id="welcome-section" class="fade-in">
-            <h1>Welcome to <span class="highlight">UBI</span> Bank</h1>
-            <p class="subtitle">Experience secure and premium digital banking.</p>
-            <div class="action-buttons">
-                <button class="primary-btn" onclick="showSection('signup-form')">Get Started</button>
-            </div>
-        </div>
-
-        <div id="signup-form" class="glass-form" style="display: none;">
-            <h2>Create Account</h2>
-            <input type="text" id="regName" placeholder="Full Name" class="premium-input">
-            <input type="text" id="regAcc" placeholder="Account Number (Must start with UBI)" class="premium-input">
-            <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
-            <button class="primary-btn" onclick="handleSignup()">Register</button>
-            <p onclick="showSection('login-form')" class="back-link">Already have an account? Login</p>
-        </div>
-
-        <div id="login-form" class="glass-form" style="display: none;">
-            <h2>Secure Login</h2>
-            <input type="text" id="loginAcc" placeholder="Account Number (e.g. UBI123)" class="premium-input">
-            <input type="password" id="loginPass" placeholder="Password" class="premium-input">
-            <button class="primary-btn" onclick="handleLogin()">Sign In</button>
-            <p onclick="showSection('signup-form')" class="back-link">New user? Signup</p>
-        </div>
-
-        <div id="dashboard" class="glass-form" style="display: none; width: 650px; padding: 40px; border-radius: 30px;">
-    
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <div>
-            <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin: 0;">Transaction</h1>
-            <p style="opacity: 0.6; font-size: 0.9rem;">Welcome back, <span id="user-display" style="color: #00a8ff; font-weight: bold;">User</span></p>
-        </div>
-        <div style="text-align: right;">
-            <p style="font-size: 0.75rem; opacity: 0.5; margin: 0;">Account Number</p>
-            <p id="acc-display" style="font-weight: 500; margin: 0;">UBI1234</p>
-        </div>
-    </div>
-
-    <div style="background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; opacity: 0.7; margin-bottom: 10px;">Available Balance</p>
-        <h1 id="balance-display" style="font-size: 3.5rem; margin: 0; font-weight: 700;">₹ 5,000.00</h1>
-    </div>
-
-    <div style="text-align: left; background: rgba(0,0,0,0.2); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-        <h3 style="font-size: 1.1rem; margin-bottom: 20px; color: #00a8ff; display: flex; align-items: center; gap: 10px;">
-            <span style="background: #00a8ff; width: 5px; height: 20px; display: inline-block; border-radius: 10px;"></span>
-            Quick Transfer
-        </h3>
         
-        <label style="font-size: 0.8rem; opacity: 0.6; margin-left: 5px;">Receiver Details</label>
-        <input type="text" id="targetAcc" placeholder="Any Account Number (e.g. UBI999)" class="premium-input" style="margin-bottom: 15px; background: rgba(255,255,255,0.05);">
-        
-        <label style="font-size: 0.8rem; opacity: 0.6; margin-left: 5px;">Credit Card Information</label>
-        <input type="text" id="cardNumber" placeholder="1234 5678 9101 1121" class="premium-input" style="margin-bottom: 15px; letter-spacing: 2px;">
+        <div id="dashboard" class="glass-form" style="width: 700px; padding: 40px; border-radius: 30px; background: rgba(15, 23, 42, 0.8);">
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin: 0;">Transaction</h1>
+                <div style="text-align: right; color: rgba(255,255,255,0.6);">
+                    <p style="margin: 0; font-size: 0.8rem;">Account Number</p>
+                    <p id="acc-display" style="color: #00a8ff; font-weight: bold; margin: 0;">UBI1234</p>
+                </div>
+            </div>
 
-        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-            <div style="flex: 1;">
-                <input type="text" id="cardExpiry" placeholder="MM/YY" class="premium-input">
+            <div style="background: linear-gradient(135deg, rgba(0, 168, 255, 0.2), rgba(0, 114, 255, 0.1)); border: 1px solid rgba(0, 168, 255, 0.3); padding: 30px; border-radius: 20px; margin-bottom: 30px; text-align: center;">
+                <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">Current Available Balance</p>
+                <h1 id="balance-display" style="font-size: 3.5rem; margin: 10px 0; font-weight: 700;">₹ 6,234.00</h1>
             </div>
-            <div style="flex: 1;">
-                <input type="password" id="cardCvv" placeholder="CVV" class="premium-input">
+
+            <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <input type="text" id="targetAcc" placeholder="Receiver Account (e.g. UBI999)" class="premium-input">
+                    <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 15px; margin-bottom: 20px;">
+                    <input type="text" id="cardExpiry" placeholder="MM/YY" class="premium-input">
+                    <input type="password" id="cardCvv" placeholder="CVV" class="premium-input">
+                    <input type="number" id="transferAmount" placeholder="Amount ₹" class="premium-input" style="color: #28a745; font-weight: bold;">
+                </div>
+                <button class="primary-btn" style="width: 100%; height: 50px; background: #00a8ff; font-weight: bold; font-size: 1rem;" onclick="handleTransfer()">CONFIRM TRANSACTION</button>
             </div>
+
+            <div style="margin-top: 40px;">
+                <h3 style="font-size: 1.1rem; color: #00a8ff; margin-bottom: 15px; text-align: left; display: flex; justify-content: space-between;">
+                    Recent History <span>Live Tracking</span>
+                </h3>
+                <div style="background: rgba(0,0,0,0.3); border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                        <thead style="background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5);">
+                            <tr>
+                                <th style="padding: 15px;">Date & Time</th>
+                                <th style="padding: 15px;">From</th>
+                                <th style="padding: 15px;">To</th>
+                                <th style="padding: 15px; text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-rows">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p onclick="location.reload()" style="margin-top: 25px; cursor: pointer; opacity: 0.5; font-size: 0.8rem;">Logout Securely</p>
         </div>
-
-        <label style="font-size: 0.8rem; opacity: 0.6; margin-left: 5px;">Transfer Amount</label>
-        <input type="number" id="transferAmount" placeholder="₹ Enter Amount" class="premium-input" style="margin-bottom: 25px; font-size: 1.2rem; font-weight: bold; color: #28a745;">
-        
-        <button class="primary-btn" style="width: 100%; height: 55px; font-size: 1.1rem; font-weight: 700; background: linear-gradient(to right, #00a8ff, #0072ff); border: none; box-shadow: 0 10px 20px rgba(0,168,255,0.3);" onclick="handleTransfer()">
-            Confirm Transaction
-        </button>
-        <div style="margin-top: 35px; text-align: left;">
-    <h3 style="font-size: 1.1rem; color: #00a8ff; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
-        Recent Activity
-    </h3>
-    <div style="max-height: 250px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px;">
-        <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; color: white;">
-            <thead>
-                <tr style="opacity: 0.6; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left;">
-                    <th style="padding: 10px;">Time</th>
-                    <th style="padding: 10px;">From</th>
-                    <th style="padding: 10px;">To</th>
-                    <th style="padding: 10px; text-align: right;">Amount</th>
-                </tr>
-            </thead>
-            <tbody id="transaction-rows">
-                </tbody>
-        </table>
-    </div>
-</div>
-    </div>
-
-    <p onclick="location.reload()" class="back-link" style="margin-top: 30px; opacity: 0.5;">Logout Securely</p>
-</div>
     </div>
 
     <script>
-        let users = {
-            "UBI456": { name: "Arun", pass: "456", balance: 3000 }
-        };
-        let currentUser = "";
+        // Initial Data
+        let currentBalance = 6234;
+        let currentUserAcc = "UBI1234";
 
-        function showSection(id) {
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'none';
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
-        }
+        function handleTransfer() {
+            // Get Values
+            const target = document.getElementById('targetAcc').value;
+            const card = document.getElementById('cardNumber').value;
+            const amount = Number(document.getElementById('transferAmount').value);
 
-        function handleSignup() {
-            let name = document.getElementById('regName').value;
-            let acc = document.getElementById('regAcc').value;
-            let pass = document.getElementById('regPass').value;
-
-            if (!acc.startsWith("UBI")) {
-                alert("Receiver Account must start with 'UBI'!");
+            // Validation
+            if (!target || !card || amount <= 0) {
+                alert("Please fill all details correctly!");
                 return;
             }
 
-            if(name && acc && pass) {
-                users[acc] = { name: name, pass: pass, balance: 5000 };
-                alert("Registration Successful!");
-                showSection('login-form');
-            } else { alert("Please fill all fields!"); }
+            if (amount > currentBalance) {
+                alert("Insufficient balance!");
+                return;
+            }
+
+            // 1. Update Balance
+            currentBalance -= amount;
+            document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
+
+            // 2. Add to History Table (This is the fix)
+            const tbody = document.getElementById('transaction-rows');
+            const row = tbody.insertRow(0); // Adds new row at the top
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB'); // DD/MM/YYYY
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+            row.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
+            row.style.background = "rgba(255,255,255,0.02)";
+
+            row.innerHTML = `
+                <td style="padding: 15px; color: rgba(255,255,255,0.7);">${dateStr} | ${timeStr}</td>
+                <td style="padding: 15px; font-weight: bold;">${currentUserAcc}</td>
+                <td style="padding: 15px; color: #00a8ff;">${target}</td>
+                <td style="padding: 15px; text-align: right; color: #ff4d4d; font-weight: bold;">- ₹${amount.toLocaleString()}</td>
+            `;
+
+            // 3. Clear Inputs & Success Message
+            alert(`Transaction Success! Sent to ${target}`);
+            document.getElementById('targetAcc').value = "";
+            document.getElementById('cardNumber').value = "";
+            document.getElementById('transferAmount').value = "";
+            document.getElementById('cardExpiry').value = "";
+            document.getElementById('cardCvv').value = "";
         }
-
-        function handleLogin() {
-            let acc = document.getElementById('loginAcc').value;
-            let pass = document.getElementById('loginPass').value;
-
-            if (users[acc] && users[acc].pass === pass) {
-                currentUser = acc;
-                document.getElementById('user-display').innerText = users[acc].name;
-                document.getElementById('acc-display').innerText = acc;
-                document.getElementById('balance-display').innerText = `₹ ${users[acc].balance.toLocaleString()}.00`;
-                showSection('dashboard');
-            } else { alert("Invalid Credentials!"); }
-        }
-
-        function handleTransfer() {
-    let target = document.getElementById('targetAcc').value;
-    let card = document.getElementById('cardNumber').value;
-    let amount = Number(document.getElementById('transferAmount').value);
-
-    // Neenga keta maari: Endha number pottaalum pogum logic
-    if (!target || !card || amount <= 0) {
-        alert("Please fill all details correctly!");
-        return;
-    }
-
-    if (amount > users[currentUser].balance) {
-        alert("Insufficient balance!");
-        return;
-    }
-
-    // Success Simulation
-    users[currentUser].balance -= amount;
-    
-    // UI Update
-    document.getElementById('balance-display').innerText = `₹ ${users[currentUser].balance.toLocaleString()}.00`;
-    
-    alert(`Transaction Successful!\n₹${amount} has been sent to Account: ${target}`);
-    
-    // Fields-ah clear pannuvom
-    document.getElementById('targetAcc').value = "";
-    document.getElementById('cardNumber').value = "";
-    document.getElementById('cardExpiry').value = "";
-    document.getElementById('cardCvv').value = "";
-    document.getElementById('transferAmount').value = "";
-}
     </script>
+
 </body>
 </html>
