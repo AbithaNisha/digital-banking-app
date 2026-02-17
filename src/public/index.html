@@ -3,184 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBI Bank | Premium Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>UBI Bank | Premium Digital Banking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.3s; }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; transition: 0.3s; }
         body {
-            margin: 0;
+            margin: 0; padding: 0;
             background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-size: cover; color: white; min-height: 100vh;
         }
         body::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.75); z-index: -1;
         }
 
-        /* Glassmorphism Containers */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 40px;
-            width: 90%; max-width: 500px;
-            margin-top: 50px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        /* Navbar */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);
         }
+        .logo { font-size: 26px; font-weight: 700; color: #00a8ff; }
+        .nav-links button {
+            background: transparent; color: white; border: none; font-weight: 500;
+            margin-left: 20px; cursor: pointer; font-size: 16px;
+        }
+        .login-btn { background: #00a8ff !important; padding: 8px 25px; border-radius: 20px !important; }
 
-        .dashboard-layout { max-width: 800px; text-align: left; }
+        /* Sections */
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; }
+        .hidden { display: none; }
+
+        /* Home Content */
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-text p { font-size: 1.2rem; opacity: 0.8; margin-bottom: 30px; }
+        .get-started { background: #00a8ff; color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; }
+
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 25px;
+            padding: 40px; width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
 
         input {
-            width: 100%; padding: 12px; margin: 8px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px; color: white; outline: none;
+            width: 100%; padding: 12px; margin: 10px 0; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none;
         }
 
-        .btn-action {
-            width: 100%; padding: 15px; margin-top: 15px;
-            background: #00a8ff; border: none; border-radius: 10px;
-            color: white; font-weight: bold; cursor: pointer;
-        }
-
-        /* History Table Scroll Fix */
-        .history-box {
-            margin-top: 25px; background: rgba(0,0,0,0.3);
-            border-radius: 15px; overflow: hidden;
-        }
-        .scroll-v { max-height: 180px; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { background: rgba(255,255,255,0.1); padding: 12px; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        .hidden { display: none; }
+        /* Dashboard Table */
+        .dashboard-box { width: 90%; max-width: 850px; text-align: left; }
+        .table-area { background: rgba(0,0,0,0.4); border-radius: 15px; margin-top: 20px; max-height: 250px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
 
-    <div style="width:100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-size: 24px; font-weight: 700; color: #00a8ff;">UBI Bank</div>
-        <div>
-            <button onclick="showPage('login')" style="background:#00a8ff; color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer;">Login</button>
+    <nav>
+        <div class="logo">UBI Bank</div>
+        <div class="nav-links">
+            <button onclick="showPage('home')">Home</button>
+            <button class="login-btn" onclick="showPage('login')">Login</button>
+        </div>
+    </nav>
+
+    <div id="home" class="container">
+        <div class="hero-text">
+            <h1>Welcome to <span style="color:#00a8ff">UBI</span> Bank Portal</h1>
+            <p>"Secure Banking for a Better Tomorrow. Your Trust, Our Priority."</p>
+            <button class="get-started" onclick="showPage('register')">Get Started</button>
         </div>
     </div>
 
-    <div id="signup-page" class="glass-card">
-        <h2>Create Your Account</h2>
-        <input type="text" id="regName" placeholder="Full Name">
-        <input type="text" id="regAcc" placeholder="Account Number (e.g. UBI123)">
-        <input type="password" id="regPass" placeholder="Create Password">
-        <button class="btn-action" onclick="handleSignup()">Register</button>
-        <p style="font-size:12px; margin-top:15px; opacity:0.6; cursor:pointer; text-align:center;" onclick="showPage('login')">Already have an account? Login here</p>
+    <div id="register" class="container hidden">
+        <div class="glass-card">
+            <h2>Create Account</h2>
+            <input type="text" id="regName" placeholder="Full Name">
+            <input type="text" id="regAcc" placeholder="Account Number (Start with UBI)">
+            <input type="password" id="regPass" placeholder="Password">
+            <button class="get-started" style="width:100%" onclick="handleReg()">Register Now</button>
+            <p style="font-size: 14px; margin-top: 15px;">Already have an account? <span style="color:#00a8ff; cursor:pointer;" onclick="showPage('login')">Login</span></p>
+        </div>
     </div>
 
-    <div id="login-page" class="glass-card hidden">
-        <h2>Secure Login</h2>
-        <input type="text" id="loginAcc" placeholder="Account Number">
-        <input type="password" id="loginPass" placeholder="Password">
-        <button class="btn-action" onclick="handleLogin()">Sign In</button>
+    <div id="login" class="container hidden">
+        <div class="glass-card">
+            <h2>Secure Login</h2>
+            <input type="text" id="logAcc" placeholder="Account Number">
+            <input type="password" id="logPass" placeholder="Password">
+            <button class="get-started" style="width:100%" onclick="handleLogin()">Sign In</button>
+        </div>
     </div>
 
-    <div id="dashboard" class="glass-card dashboard-layout hidden">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-                <h2 style="margin: 0;">Welcome, <span id="disp-name" style="color:#00a8ff">User</span></h2>
-                <p style="margin: 5px 0; font-size: 12px; opacity: 0.6;">A/C: <span id="disp-acc">UBI000</span></p>
+    <div id="dashboard" class="container hidden">
+        <div class="glass-card dashboard-box">
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <h2 style="margin:0">Hello, <span id="uName" style="color:#00a8ff">User</span></h2>
+                    <p style="margin:5px 0; opacity:0.7">A/C: <span id="uAcc">UBI...</span></p>
+                </div>
+                <div style="text-align:right">
+                    <p style="font-size:12px; margin:0">BALANCE</p>
+                    <h2 id="uBal" style="margin:0; color:#00a8ff">₹ 5,000.00</h2>
+                </div>
             </div>
-            <button onclick="location.reload()" style="background:none; border: 1px solid #ff4d4d; color:#ff4d4d; padding:5px 10px; border-radius:5px; cursor:pointer;">Logout</button>
-        </div>
 
-        <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; text-align: center; margin: 20px 0;">
-            <p style="margin: 0; font-size: 12px; opacity: 0.7;">CURRENT BALANCE</p>
-            <h1 id="disp-bal" style="font-size: 3rem; margin: 10px 0;">₹ 5,000.00</h1>
-        </div>
+            <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 25px 0;">
 
-        <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
-            <h4 style="margin: 0 0 15px 0; color: #00a8ff;">New Transaction</h4>
-            <input type="text" id="targetAcc" placeholder="Receiver Account (UBI...)">
+            <h3>Transaction</h3>
+            <input type="text" id="tAcc" placeholder="Receiver Account Number">
             <div style="display: flex; gap: 10px;">
-                <input type="text" id="cardNum" placeholder="16 Digit Card Number" style="flex: 2;">
-                <input type="text" id="cardExp" placeholder="MM/YY" style="flex: 1;">
-                <input type="password" id="cardCvv" placeholder="CVV" style="flex: 1;">
+                <input type="text" id="tCard" placeholder="Credit Card Number">
+                <input type="text" id="tCvv" placeholder="CVV" style="width:80px">
+                <input type="text" id="tDate" placeholder="MM/YY" style="width:100px">
             </div>
-            <input type="number" id="transAmt" placeholder="Enter Amount (₹)">
-            <button class="btn-action" onclick="handleTransfer()">Complete Transaction</button>
-        </div>
+            <input type="number" id="tAmt" placeholder="Amount (₹)">
+            <button class="get-started" style="width:100%" onclick="doTrans()">Complete Transaction</button>
 
-        <div class="history-box">
-            <h4 style="margin: 15px; color: #00a8ff;">Transaction History</h4>
-            <div class="scroll-v">
+            <h4 style="margin-top: 30px;">Transaction History</h4>
+            <div class="table-area">
                 <table>
                     <thead>
-                        <tr><th>Date & Time</th><th>To Account</th><th style="text-align:right">Amount</th></tr>
+                        <tr><th>Time</th><th>Receiver</th><th>Amount</th></tr>
                     </thead>
-                    <tbody id="history-body"></tbody>
+                    <tbody id="hBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script>
-        let users = { "UBI1234": { name: "S Nisha", pass: "123", balance: 6234 } };
+        let users = { "UBI1234": { name: "S Nisha", pass: "123", bal: 6234 } };
         let current = "";
 
         function showPage(id) {
-            ['signup-page', 'login-page', 'dashboard'].forEach(p => document.getElementById(p).classList.add('hidden'));
+            ['home', 'register', 'login', 'dashboard'].forEach(p => document.getElementById(p).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
-        function handleSignup() {
+        function handleReg() {
             let n = document.getElementById('regName').value;
             let a = document.getElementById('regAcc').value;
             let p = document.getElementById('regPass').value;
             if (a.startsWith("UBI") && p) {
-                users[a] = { name: n, pass: p, balance: 5000 };
-                alert("Registration Successful!"); showPage('login');
+                users[a] = { name: n, pass: p, bal: 5000 };
+                alert("Account Created!"); showPage('login');
             } else { alert("Account must start with UBI!"); }
         }
 
         function handleLogin() {
-            let a = document.getElementById('loginAcc').value;
-            let p = document.getElementById('loginPass').value;
+            let a = document.getElementById('logAcc').value;
+            let p = document.getElementById('logPass').value;
             if (users[a] && users[a].pass === p) {
                 current = a;
-                document.getElementById('disp-name').innerText = users[a].name;
-                document.getElementById('disp-acc').innerText = a;
-                updateUI();
+                document.getElementById('uName').innerText = users[a].name;
+                document.getElementById('uAcc').innerText = a;
+                document.getElementById('uBal').innerText = `₹ ${users[a].bal.toLocaleString()}.00`;
                 showPage('dashboard');
-            } else { alert("Invalid Credentials!"); }
+            } else { alert("Invalid Login!"); }
         }
 
-        function updateUI() {
-            document.getElementById('disp-bal').innerText = `₹ ${users[current].balance.toLocaleString()}.00`;
-        }
-
-        function handleTransfer() {
-            let target = document.getElementById('targetAcc').value;
-            let amount = Number(document.getElementById('transAmt').value);
-            let cvv = document.getElementById('cardCvv').value;
-
-            if (amount > 0 && amount <= users[current].balance && cvv.length === 3) {
-                users[current].balance -= amount;
-                updateUI();
-                
-                // History Generation
-                const row = document.getElementById('history-body').insertRow(0);
-                const now = new Date();
-                row.innerHTML = `<td>${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</td>
-                                 <td style="color:#00a8ff">${target}</td>
-                                 <td style="text-align:right; color:#ff4d4d; font-weight:bold;">- ₹${amount.toLocaleString()}</td>`;
-                
-                alert("Transaction Completed Successfully!");
-                document.getElementById('transAmt').value = "";
-                document.getElementById('targetAcc').value = "";
-            } else { alert("Check your Balance or CVV!"); }
+        function doTrans() {
+            let acc = document.getElementById('tAcc').value;
+            let amt = Number(document.getElementById('tAmt').value);
+            if (amt > 0 && amt <= users[current].bal) {
+                users[current].bal -= amt;
+                document.getElementById('uBal').innerText = `₹ ${users[current].bal.toLocaleString()}.00`;
+                const row = document.getElementById('hBody').insertRow(0);
+                row.innerHTML = `<td>${new Date().toLocaleTimeString()}</td><td>${acc}</td><td style="color:#ff4d4d">-₹${amt}</td>`;
+                alert("Transaction Success!");
+            } else { alert("Insufficient Funds!"); }
         }
     </script>
 </body>
