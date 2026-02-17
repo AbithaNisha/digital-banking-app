@@ -3,196 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBI Bank | Premium Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>UBI Bank | Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #007bff;
-            --bg-color: #f0f2f5;
-        }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-color);
             margin: 0;
-            padding-bottom: 50px; /* Keela space kuduthurukken scroll panna */
+            background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+        body::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); z-index: -1;
+        }
         .navbar {
-            width: 100%;
-            padding: 15px 50px;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-sizing: border-box;
+            width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;
         }
-        .logo { font-weight: 700; font-size: 22px; color: #333; }
-        .logo span { color: var(--primary); }
+        .logo { font-size: 24px; font-weight: 700; color: #00a8ff; }
+        .nav-btn { background: #00a8ff; color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; }
 
-        .dashboard-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .dashboard-card {
-            background: white;
-            width: 100%;
-            max-width: 700px; /* Too big-ah illama neat-ah irukkum */
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            width: 90%; max-width: 500px;
             text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        .balance-box {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-
-        .form-section {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e1e4e8;
-            text-align: left;
-        }
+        .dashboard-container { max-width: 750px; text-align: left; }
 
         input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #d1d5da;
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px; color: white; outline: none;
         }
 
-        .btn-main {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            width: 100%;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
+        .primary-btn {
+            width: 100%; padding: 15px; margin-top: 20px;
+            background: #00a8ff; border: none; border-radius: 10px;
+            color: white; font-weight: bold; cursor: pointer;
         }
 
-        /* TABLE SCROLL FIX */
-        .report-container {
-            margin-top: 25px;
-            text-align: left;
+        .balance-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px; border-radius: 20px; text-align: center; margin: 20px 0;
         }
 
-        .table-responsive {
-            width: 100%;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            background: #fafafa;
-            overflow: hidden;
+        .table-wrapper {
+            margin-top: 20px; background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px; overflow: hidden;
         }
+        .scroll-area { max-height: 200px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { background: rgba(255, 255, 255, 0.1); padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th { background: #f8f9fa; padding: 12px; font-size: 13px; color: #666; border-bottom: 2px solid #eee; }
-        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; color: #444; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="logo">UBI <span>Bank</span></div>
-        <div style="font-size: 14px; color: #555;">Welcome, <b>S Nisha</b> (UBI1234)</div>
+        <div class="logo">UBI Bank</div>
+        <div id="nav-links">
+            <button class="nav-btn" onclick="showPage('login')">Login</button>
+        </div>
     </div>
 
-    <div class="dashboard-wrapper">
-        <div class="dashboard-card">
-            <div class="balance-box">
-                <p style="margin:0; font-size: 13px; opacity: 0.9; letter-spacing: 1px;">AVAILABLE BALANCE</p>
-                <h1 id="balance-display" style="margin: 10px 0 0; font-size: 40px;">₹ 6,234.00</h1>
-            </div>
+    <div id="welcome-page" class="glass-container">
+        <h1 style="font-size: 2.5rem;">Welcome to <span style="color:#00a8ff;">UBI</span></h1>
+        <p style="opacity: 0.8;">Experience the next generation of digital banking.</p>
+        <button class="primary-btn" onclick="showPage('signup')">Get Started</button>
+    </div>
 
-            <div class="form-section">
-                <h4 style="margin: 0 0 15px 0; color: #333;">Credit Card Transfer</h4>
-                <input type="text" id="targetAcc" placeholder="Receiver Account (Starts with UBI)">
-                <input type="text" id="cardNumber" placeholder="16 Digit Card Number">
-                
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" placeholder="MM/YY" style="flex: 1;">
-                    <input type="password" placeholder="CVV" style="flex: 1;">
-                </div>
-                
-                <input type="number" id="transferAmount" placeholder="Amount (₹)" style="border: 2px solid #e1e4e8;">
-                <button class="btn-main" onclick="handleTransfer()">OK / Send Money</button>
-            </div>
+    <div id="signup-page" class="glass-container hidden">
+        <h2>Create Account</h2>
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="text" id="regAcc" placeholder="Account Number (UBI...)">
+        <input type="password" id="regPass" placeholder="Create Password">
+        <button class="primary-btn" onclick="handleSignup()">Register</button>
+    </div>
 
-            <div class="report-container">
-                <h4 style="margin-bottom: 10px; color: #333;">Recent Transactions</h4>
-                <div class="table-responsive">
+    <div id="login-page" class="glass-container hidden">
+        <h2>Secure Login</h2>
+        <input type="text" id="loginAcc" placeholder="Account Number">
+        <input type="password" id="loginPass" placeholder="Password">
+        <button class="primary-btn" onclick="handleLogin()">Sign In</button>
+    </div>
+
+    <div id="dashboard" class="glass-container dashboard-container hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 style="margin: 0;">Welcome, <span id="user-display" style="color:#00a8ff;">User</span></h2>
+                <p style="margin: 5px 0; font-size: 12px; opacity: 0.7;">Account: <span id="acc-display">UBI000</span></p>
+            </div>
+            <button onclick="location.reload()" style="background:none; border: 1px solid red; color:red; cursor:pointer; padding:5px 10px; border-radius:5px;">Logout</button>
+        </div>
+
+        <div class="balance-card">
+            <p style="margin: 0; font-size: 14px; opacity: 0.7;">Current Balance</p>
+            <h1 id="balance-display" style="font-size: 3rem; margin: 10px 0;">₹ 5,000.00</h1>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+            <h4 style="margin: 0 0 15px 0; color: #00a8ff;">Credit Card Transfer</h4>
+            <input type="text" id="targetAcc" placeholder="Receiver Account (UBI...)">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" placeholder="16 Digit Card Number" style="flex: 2;">
+                <input type="text" placeholder="MM/YY" style="flex: 1;">
+            </div>
+            <input type="number" id="transferAmount" placeholder="Amount (₹)">
+            <button class="primary-btn" onclick="handleTransfer()">OK / Send Money</button>
+        </div>
+
+        <div class="report-section">
+            <h4 style="margin: 20px 0 10px 0; color: #00a8ff;">Transaction History</h4>
+            <div class="table-wrapper">
+                <div class="scroll-area">
                     <table>
                         <thead>
-                            <tr>
-                                <th style="text-align: left;">Date & Time</th>
-                                <th style="text-align: left;">Receiver</th>
-                                <th style="text-align: right;">Amount</th>
-                            </tr>
+                            <tr><th>Time</th><th>To Account</th><th style="text-align:right;">Amount</th></tr>
                         </thead>
-                        <tbody id="report-body">
-                            </tbody>
+                        <tbody id="report-body"></tbody>
                     </table>
                 </div>
             </div>
-
-            <p onclick="location.reload()" style="margin-top: 40px; color: #999; cursor: pointer; font-size: 12px;">Logout System</p>
         </div>
     </div>
 
     <script>
-        let balance = 6234;
+        let users = { "UBI1234": { name: "S Nisha", pass: "123", balance: 6234 } };
+        let currentUser = "";
+
+        function showPage(id) {
+            ['welcome-page', 'signup-page', 'login-page', 'dashboard'].forEach(p => 
+                document.getElementById(p).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function handleSignup() {
+            let name = document.getElementById('regName').value;
+            let acc = document.getElementById('regAcc').value;
+            let pass = document.getElementById('regPass').value;
+            if (acc.startsWith("UBI") && pass) {
+                users[acc] = { name: name, pass: pass, balance: 5000 };
+                alert("Account Created!"); showPage('login');
+            } else { alert("Account must start with UBI!"); }
+        }
+
+        function handleLogin() {
+            let acc = document.getElementById('loginAcc').value;
+            let pass = document.getElementById('loginPass').value;
+            if (users[acc] && users[acc].pass === pass) {
+                currentUser = acc;
+                document.getElementById('user-display').innerText = users[acc].name;
+                document.getElementById('acc-display').innerText = acc;
+                updateUI();
+                showPage('dashboard');
+            } else { alert("Invalid Login!"); }
+        }
+
+        function updateUI() {
+            document.getElementById('balance-display').innerText = `₹ ${users[currentUser].balance.toLocaleString()}.00`;
+        }
 
         function handleTransfer() {
             let target = document.getElementById('targetAcc').value;
             let amount = Number(document.getElementById('transferAmount').value);
-
-            if (!target || amount <= 0 || amount > balance) {
-                alert("Please check the details or balance!");
-                return;
-            }
-
-            balance -= amount;
-            document.getElementById('balance-display').innerText = `₹ ${balance.toLocaleString()}.00`;
-
-            // Adding row to table
-            const tbody = document.getElementById('report-body');
-            const row = tbody.insertRow(0);
-            const now = new Date();
-            const timeStr = now.toLocaleDateString() + " " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-            row.innerHTML = `
-                <td>${timeStr}</td>
-                <td>${target}</td>
-                <td style="text-align: right; color: #dc3545; font-weight: bold;">- ₹${amount.toLocaleString()}</td>
-            `;
-
-            alert("Transfer Successful!");
-            document.getElementById('transferAmount').value = "";
-            document.getElementById('targetAcc').value = "";
+            if (amount > 0 && amount <= users[currentUser].balance) {
+                users[currentUser].balance -= amount;
+                updateUI();
+                const row = document.getElementById('report-body').insertRow(0);
+                row.innerHTML = `<td>${new Date().toLocaleString()}</td><td>${target}</td><td style="text-align:right; color:#ff4d4d;">- ₹${amount}</td>`;
+                alert("Transfer Success!");
+            } else { alert("Check Balance!"); }
         }
     </script>
 </body>
