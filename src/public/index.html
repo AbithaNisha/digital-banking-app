@@ -31,27 +31,30 @@
 
     <div id="login-form" class="glass-form" style="display: none;">
         <h2>Secure Login</h2>
-        <input type="email" id="userEmail" placeholder="Email Address" class="premium-input">
-        <input type="password" id="userPass" placeholder="Password" class="premium-input">
+        <input type="text" id="loginAcc" placeholder="Account Number" class="premium-input">
+        <input type="password" id="loginPass" placeholder="Password" class="premium-input">
         <button class="primary-btn" onclick="handleLogin()">Sign In</button>
         <p onclick="showWelcome()" class="back-link">← Back to Home</p>
     </div>
 
     <div id="signup-form" class="glass-form" style="display: none;">
         <h2>Join UBI Bank</h2>
-        <input type="text" placeholder="Full Name" class="premium-input">
-        <input type="email" placeholder="Email Address" class="premium-input">
-        <input type="password" placeholder="Password" class="premium-input">
-        <button class="primary-btn" onclick="showLogin()">Register</button>
+        <input type="text" id="regName" placeholder="Full Name" class="premium-input">
+        <input type="text" id="regAcc" placeholder="Create Account Number" class="premium-input">
+        <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
+        <button class="primary-btn" onclick="handleSignup()">Register</button>
         <p onclick="showWelcome()" class="back-link">← Back to Home</p>
     </div>
 
     <div id="dashboard" class="glass-form" style="display: none; width: 500px;">
-        <h2>Bank Dashboard</h2>
+        <h2>Welcome, <span id="user-display">User</span></h2>
+        <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
+        
         <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
-            <p>Available Balance</p>
-            <h1 id="balance-display">$ 5,000.00</h1>
-        </div>
+    <p>Available Balance</p>
+    <h1 id="balance-display">₹ 5,000.00</h1>
+</div>
+        
         <div style="display: flex; gap: 10px;">
             <button class="primary-btn" style="background: #28a745; flex: 1;" onclick="doTransaction('Deposit')">Deposit</button>
             <button class="primary-btn" style="background: #dc3545; flex: 1;" onclick="doTransaction('Withdraw')">Withdraw</button>
@@ -61,19 +64,16 @@
 </div>
 
 <script>
-    // Sections mathura logic
-    function showLogin() {
-        hideAll();
-        document.getElementById('login-form').style.display = 'block';
-    }
-    function showSignup() {
-        hideAll();
-        document.getElementById('signup-form').style.display = 'block';
-    }
-    function showWelcome() {
-        hideAll();
-        document.getElementById('welcome-section').style.display = 'block';
-    }
+    // Database mathiri store panna simple variables
+    let savedAcc = "";
+    let savedPass = "";
+    let savedName = "";
+    let currentBalance = 5000;
+
+    // Sections switch panna
+    function showLogin() { hideAll(); document.getElementById('login-form').style.display = 'block'; }
+    function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
+    function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
     function hideAll() {
         document.getElementById('welcome-section').style.display = 'none';
         document.getElementById('login-form').style.display = 'none';
@@ -81,33 +81,54 @@
         document.getElementById('dashboard').style.display = 'none';
     }
 
-    // Login click panna Dashboard-ku poga
-    function handleLogin() {
-        const email = document.getElementById('userEmail').value;
-        const pass = document.getElementById('userPass').value;
+    // Signup Logic
+    function handleSignup() {
+        savedName = document.getElementById('regName').value;
+        savedAcc = document.getElementById('regAcc').value;
+        savedPass = document.getElementById('regPass').value;
 
-        if (email !== "" && pass !== "") {
+        if(savedAcc && savedPass) {
+            alert("Registration Successful! Please Login.");
+            showLogin();
+        } else {
+            alert("Account Number and Password are required!");
+        }
+    }
+
+    // Login Logic
+    function handleLogin() {
+        const inputAcc = document.getElementById('loginAcc').value;
+        const inputPass = document.getElementById('loginPass').value;
+
+        // Signup panna account-um login-la kudukura account-um match aaganum
+        if (inputAcc === savedAcc && inputPass === savedPass && savedAcc !== "") {
+            document.getElementById('user-display').innerText = savedName;
+            document.getElementById('acc-display').innerText = savedAcc;
             hideAll();
             document.getElementById('dashboard').style.display = 'block';
         } else {
-            alert("Please enter details!");
+            alert("Invalid Account Number or Password!");
         }
     }
 
-    // Money Transaction Logic
-    let currentBalance = 5000;
-    function doTransaction(type) {
-        let amount = prompt(`Enter amount to ${type}:`);
-        if (amount && !isNaN(amount)) {
-            if (type === 'Withdraw' && amount > currentBalance) {
-                alert("Insufficient funds!");
-            } else {
-                currentBalance = (type === 'Deposit') ? currentBalance + Number(amount) : currentBalance - Number(amount);
-                document.getElementById('balance-display').innerText = `$ ${currentBalance.toLocaleString()}.00`;
-                alert(`${type} successful!`);
-            }
+    // Transaction Logic
+    // Money Transaction Logic (Rupees Edition)
+let currentBalance = 5000;
+function doTransaction(type) {
+    let amount = prompt(`Enter amount to ${type}:`);
+    if (amount && !isNaN(amount)) {
+        if (type === 'Withdraw' && amount > currentBalance) {
+            alert("Insufficient funds! (Kashu pathala!)");
+        } else {
+            currentBalance = (type === 'Deposit') ? currentBalance + Number(amount) : currentBalance - Number(amount);
+            
+            // Inga $ symbol-a ₹ nu mathi update pannuvom
+            document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
+            
+            alert(`${type} of ₹${amount} successful!`);
         }
     }
+}
 </script>
 </body>
 </html>
