@@ -12,7 +12,7 @@
     <div class="navbar">
         <div class="logo">UBI <span>Bank</span></div>
         <div class="nav-links">
-            <a href="#">Home</a>
+            <a href="#" onclick="showWelcome()">Home</a>
             <a href="#">About</a>
             <a href="#">Services</a>
             <a href="#" class="nav-btn" onclick="showLogin()">Login</a>
@@ -20,115 +20,119 @@
     </div>
 
     <div class="hero-container">
-    <div id="welcome-section" class="fade-in">
-        <h1>Welcome to <span class="highlight">UNIX</span> Bank Portal</h1>
-        <p class="subtitle">Experience the next generation of secure digital banking.</p>
-        <div class="action-buttons">
-            <button class="primary-btn" onclick="showLogin()">Get Started</button>
-            <button class="secondary-btn" onclick="showSignup()">Create Account</button>
+        <div id="welcome-section" class="fade-in">
+            <h1>Welcome to <span class="highlight">UNIX</span> Bank Portal</h1>
+            <p class="subtitle">Experience the next generation of secure digital banking.</p>
+            <div class="action-buttons">
+                <button class="primary-btn" onclick="showLogin()">Get Started</button>
+                <button class="secondary-btn" onclick="showSignup()">Create Account</button>
+            </div>
+        </div>
+
+        <div id="login-form" class="glass-form" style="display: none;">
+            <h2>Secure Login</h2>
+            <input type="text" id="loginAcc" placeholder="Account Number" class="premium-input">
+            <input type="password" id="loginPass" placeholder="Password" class="premium-input">
+            <button class="primary-btn" onclick="handleLogin()">Sign In</button>
+            <p onclick="showWelcome()" class="back-link">← Back to Home</p>
+        </div>
+
+        <div id="signup-form" class="glass-form" style="display: none;">
+            <h2>Join UBI Bank</h2>
+            <input type="text" id="regName" placeholder="Full Name" class="premium-input">
+            <input type="text" id="regAcc" placeholder="Create Account Number" class="premium-input">
+            <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
+            <button class="primary-btn" onclick="handleSignup()">Register</button>
+            <p onclick="showWelcome()" class="back-link">← Back to Home</p>
+        </div>
+
+        <div id="dashboard" class="glass-form" style="display: none; width: 500px;">
+            <h2>Welcome, <span id="user-display">User</span></h2>
+            <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                <p>Available Balance</p>
+                <h1 id="balance-display">₹ 5,000.00</h1>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="primary-btn" style="background: #28a745; flex: 1; margin:0;" onclick="doTransaction('Deposit')">Deposit</button>
+                <button class="primary-btn" style="background: #dc3545; flex: 1; margin:0;" onclick="doTransaction('Withdraw')">Withdraw</button>
+            </div>
+            <p onclick="location.reload()" class="back-link" style="margin-top: 20px;">Logout</p>
         </div>
     </div>
 
-    <div id="login-form" class="glass-form" style="display: none;">
-        <h2>Secure Login</h2>
-        <input type="text" id="loginAcc" placeholder="Account Number" class="premium-input">
-        <input type="password" id="loginPass" placeholder="Password" class="premium-input">
-        <button class="primary-btn" onclick="handleLogin()">Sign In</button>
-        <p onclick="showWelcome()" class="back-link">← Back to Home</p>
+    <div class="footer-info">
+        <span>📞 +91 98765 43210</span>
+        <span>📧 support@ubibank.com</span>
+        <span>🏢 Chennai, TN</span>
     </div>
 
-    <div id="signup-form" class="glass-form" style="display: none;">
-        <h2>Join UBI Bank</h2>
-        <input type="text" id="regName" placeholder="Full Name" class="premium-input">
-        <input type="text" id="regAcc" placeholder="Create Account Number" class="premium-input">
-        <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
-        <button class="primary-btn" onclick="handleSignup()">Register</button>
-        <p onclick="showWelcome()" class="back-link">← Back to Home</p>
-    </div>
+    <script>
+        // Database simulation
+        let savedAcc = "";
+        let savedPass = "";
+        let savedName = "";
+        let currentBalance = 5000;
 
-    <div id="dashboard" class="glass-form" style="display: none; width: 500px;">
-        <h2>Welcome, <span id="user-display">User</span></h2>
-        <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
-        
-        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
-    <p>Available Balance</p>
-    <h1 id="balance-display">₹ 5,000.00</h1>
-</div>
-        
-        <div style="display: flex; gap: 10px;">
-            <button class="primary-btn" style="background: #28a745; flex: 1;" onclick="doTransaction('Deposit')">Deposit</button>
-            <button class="primary-btn" style="background: #dc3545; flex: 1;" onclick="doTransaction('Withdraw')">Withdraw</button>
-        </div>
-        <p onclick="location.reload()" class="back-link" style="margin-top: 20px;">Logout</p>
-    </div>
-</div>
-
-<script>
-    // Database mathiri store panna simple variables
-    let savedAcc = "";
-    let savedPass = "";
-    let savedName = "";
-    let currentBalance = 5000;
-
-    // Sections switch panna
-    function showLogin() { hideAll(); document.getElementById('login-form').style.display = 'block'; }
-    function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
-    function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
-    function hideAll() {
-        document.getElementById('welcome-section').style.display = 'none';
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('signup-form').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'none';
-    }
-
-    // Signup Logic
-    function handleSignup() {
-        savedName = document.getElementById('regName').value;
-        savedAcc = document.getElementById('regAcc').value;
-        savedPass = document.getElementById('regPass').value;
-
-        if(savedAcc && savedPass) {
-            alert("Registration Successful! Please Login.");
-            showLogin();
-        } else {
-            alert("Account Number and Password are required!");
+        // Navigation Logic
+        function hideAll() {
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
         }
-    }
 
-    // Login Logic
-    function handleLogin() {
-        const inputAcc = document.getElementById('loginAcc').value;
-        const inputPass = document.getElementById('loginPass').value;
+        function showLogin() { hideAll(); document.getElementById('login-form').style.display = 'block'; }
+        function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
+        function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
 
-        // Signup panna account-um login-la kudukura account-um match aaganum
-        if (inputAcc === savedAcc && inputPass === savedPass && savedAcc !== "") {
-            document.getElementById('user-display').innerText = savedName;
-            document.getElementById('acc-display').innerText = savedAcc;
-            hideAll();
-            document.getElementById('dashboard').style.display = 'block';
-        } else {
-            alert("Invalid Account Number or Password!");
+        // Signup Logic
+        function handleSignup() {
+            savedName = document.getElementById('regName').value;
+            savedAcc = document.getElementById('regAcc').value;
+            savedPass = document.getElementById('regPass').value;
+
+            if(savedName && savedAcc && savedPass) {
+                alert("Registration Successful! Now please login with Account: " + savedAcc);
+                showLogin();
+            } else {
+                alert("Please fill all fields!");
+            }
         }
-    }
 
-    // Transaction Logic
-    // Money Transaction Logic (Rupees Edition)
-let currentBalance = 5000;
-function doTransaction(type) {
-    let amount = prompt(`Enter amount to ${type}:`);
-    if (amount && !isNaN(amount)) {
-        if (type === 'Withdraw' && amount > currentBalance) {
-            alert("Insufficient funds! (Kashu pathala!)");
-        } else {
-            currentBalance = (type === 'Deposit') ? currentBalance + Number(amount) : currentBalance - Number(amount);
-            
-            // Inga $ symbol-a ₹ nu mathi update pannuvom
-            document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
-            
-            alert(`${type} of ₹${amount} successful!`);
+        // Login Logic
+        function handleLogin() {
+            const inputAcc = document.getElementById('loginAcc').value;
+            const inputPass = document.getElementById('loginPass').value;
+
+            if (inputAcc === savedAcc && inputPass === savedPass && savedAcc !== "") {
+                document.getElementById('user-display').innerText = savedName;
+                document.getElementById('acc-display').innerText = savedAcc;
+                hideAll();
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert("Invalid Credentials! Did you register first?");
+            }
         }
-    }
-}
-</script>
+
+        // Transaction Logic
+        function doTransaction(type) {
+            let amount = prompt(`Enter amount to ${type}:`);
+            if (amount && !isNaN(amount) && amount > 0) {
+                let numAmount = Number(amount);
+                if (type === 'Withdraw' && numAmount > currentBalance) {
+                    alert("Insufficient funds! (Kashu pathala!)");
+                } else {
+                    currentBalance = (type === 'Deposit') ? currentBalance + numAmount : currentBalance - numAmount;
+                    document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
+                    alert(`${type} of ₹${numAmount} successful!`);
+                }
+            } else if (amount !== null) {
+                alert("Please enter a valid amount!");
+            }
+        }
+    </script>
 </body>
 </html>
