@@ -1,54 +1,108 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-    /* Background image set pannuvom */
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background: linear-gradient(rgba(0, 15, 40, 0.7), rgba(0, 15, 40, 0.7)), 
+                url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
+    color: white;
     height: 100vh;
-    margin: 0;
+    overflow: hidden;
 }
 
-.header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px); /* Glass effect header */
-    color: white;
-    padding: 15px 50px;
+/* Premium Navbar */
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 30px 8%;
 }
 
-.login-card {
-    background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
-    backdrop-filter: blur(15px); /* Glass blur effect */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 50px;
-    margin: 100px auto;
-    width: 450px;
-    border-radius: 20px;
-    text-align: center;
+.logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
+.logo span { color: #00a8ff; }
+
+.nav-links a {
     color: white;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
 
-.login-card h2 { font-size: 2rem; margin-bottom: 10px; }
+.nav-btn {
+    background: #00a8ff;
+    padding: 10px 25px;
+    border-radius: 50px;
+}
 
-button {
-    background-color: #007bff;
+/* Hero Section (No Box) */
+.hero-container {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 { font-size: 4rem; font-weight: 700; margin-bottom: 15px; }
+.highlight { color: #00a8ff; text-shadow: 0 0 20px rgba(0,168,255,0.5); }
+.subtitle { font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px; }
+
+/* Buttons */
+.primary-btn {
+    background: #00a8ff;
     color: white;
     border: none;
-    padding: 12px 40px;
-    border-radius: 50px; /* Fully rounded button */
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 600;
     cursor: pointer;
+    margin: 10px;
     transition: 0.3s;
-    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Hover panna light-ah zoom aagum */
+.secondary-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
 }
+
+/* Glass Form Effect */
+.glass-form {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 400px;
+}
+
+.premium-input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+}
+
+.footer-info {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.back-link { cursor: pointer; margin-top: 15px; font-size: 0.8rem; opacity: 0.7; }
