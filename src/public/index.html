@@ -3,118 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBI Bank | Premium Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>UBI Bank | Premium Crystal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.3s; }
+        * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; transition: 0.3s; }
         body {
             margin: 0; padding: 0; min-height: 100vh;
-            /* Light but detailed background */
-            background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069') no-repeat center center fixed;
-            background-size: cover; color: #2c3e50; display: flex; flex-direction: column;
+            /* HD Clear Image - No Blur */
+            background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070') no-repeat center center fixed;
+            background-size: cover; display: flex; flex-direction: column;
         }
-        /* Soft overlay to make it look premium and not plane */
-        body::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(240, 245, 255, 0.85); z-index: -1; }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); width: 100%; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 26px; font-weight: 700; color: #0056b3; letter-spacing: -1px; }
-        .nav-links button { background: none; border: none; margin-left: 25px; cursor: pointer; font-weight: 500; color: #555; font-size: 15px; }
-        .login-nav { background: #0056b3 !important; color: white !important; padding: 10px 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
+        /* Subtle Dark Overlay for Text Readability */
+        body::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: -1; }
 
-        .page-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); width: 100%; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .logo { font-size: 26px; font-weight: 700; color: #f1c40f; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .nav-links button { background: none; border: none; margin-left: 20px; cursor: pointer; color: white; font-weight: 600; }
+        .login-nav { background: #8e44ad !important; padding: 8px 25px; border-radius: 5px; box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); }
+
+        .page-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         
-        /* Premium Card Design */
-        .glass-card { background: #ffffff; border-radius: 20px; padding: 45px; width: 100%; max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid #e1e8f0; text-align: center; }
+        /* Glassmorphism Card - Clearer Content */
+        .glass-card { 
+            background: rgba(0, 0, 0, 0.75); border: 2px solid #8e44ad; border-radius: 15px; 
+            padding: 40px; width: 100%; max-width: 500px; color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6); text-align: center;
+        }
         .hidden { display: none; }
 
-        .hero h1 { font-size: 3.2rem; color: #1a2a6c; margin-bottom: 15px; font-weight: 700; }
-        .hero p { color: #5d6d7e; font-size: 1.1rem; margin-bottom: 35px; line-height: 1.6; }
+        .hero h1 { font-size: 3.5rem; color: white; text-shadow: 3px 3px 10px rgba(0,0,0,0.8); }
+        .hero p { font-size: 1.2rem; margin: 20px 0 40px; color: #f1c40f; font-weight: 600; }
         
-        .main-btn { background: #0056b3; color: white; border: none; padding: 14px 40px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; }
-        .main-btn:hover { background: #004494; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3); }
+        .action-btn { background: #8e44ad; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; }
+        .action-btn:hover { background: #9b59b6; transform: translateY(-3px); }
 
-        input { width: 100%; padding: 14px; margin: 12px 0; border: 1.5px solid #dce4ec; border-radius: 10px; outline: none; background: #f9fbff; font-size: 14px; }
-        input:focus { border-color: #0056b3; background: #fff; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(255,255,255,0.1); border: 1px solid #8e44ad; border-radius: 5px; color: white; outline: none; }
+        input::placeholder { color: rgba(255,255,255,0.6); }
 
-        /* Dashboard Specific */
-        .dashboard-box { max-width: 850px; text-align: left; padding: 35px; }
-        .balance-card { background: linear-gradient(135deg, #0056b3 0%, #003d82 100%); padding: 30px; border-radius: 18px; text-align: left; margin: 25px 0; color: white; box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2); }
+        /* Dashboard Styles */
+        .dashboard-box { max-width: 800px; text-align: left; }
+        .balance-strip { background: linear-gradient(90deg, #8e44ad, #2c3e50); padding: 20px; border-radius: 10px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #f1c40f; }
         
-        .history-wrap { background: #fcfdfe; border: 1px solid #edf2f7; border-radius: 12px; margin-top: 25px; max-height: 180px; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 14px; text-align: left; border-bottom: 1px solid #f1f4f8; }
-        th { background: #f8faff; color: #4a5568; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-        td { color: #2d3748; font-size: 14px; }
-
-        .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #fff5f5; color: #e53e3e; }
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { background: #8e44ad; color: white; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">UBI<span style="color:#2c3e50">Bank</span></div>
+        <div class="logo">UBI BANK</div>
         <div class="nav-links">
-            <button onclick="showPage('home')">Home</button>
-            <button class="login-nav" onclick="showPage('login')">Login</button>
+            <button onclick="showPage('home')">HOME</button>
+            <button class="login-nav" onclick="showPage('login')">LOGIN</button>
         </div>
     </nav>
 
     <div class="page-container">
-        <div id="home" class="hero" style="text-align: center;">
-            <h1>Smart Banking for <br><span style="color:#0056b3">Modern Life</span></h1>
-            <p>"Secure, reliable and fast. Managing your <br>finances has never been this elegant."</p>
-            <button class="main-btn" style="width:auto" onclick="showPage('register')">Start Your Journey</button>
+        <div id="home" style="text-align: center;">
+            <h1 class="hero">Elite Digital Banking</h1>
+            <p>"Transparency in every transaction. Security in every step."</p>
+            <button class="action-btn" style="width:auto" onclick="showPage('register')">GET STARTED NOW</button>
         </div>
 
         <div id="register" class="glass-card hidden">
-            <h2 style="color:#1a2a6c">Create Account</h2>
+            <h2 style="color:#f1c40f">Registration</h2>
             <input type="text" id="regName" placeholder="Full Name">
-            <input type="text" id="regAcc" placeholder="Account Number (e.g. UBI1234)">
-            <input type="password" id="regPass" placeholder="Security Password">
-            <button class="main-btn" onclick="handleRegister()">Create My Account</button>
-            <p style="font-size:13px; color:#666; margin-top:15px;">Already a member? <span onclick="showPage('login')" style="color:#0056b3; cursor:pointer; font-weight:600;">Login here</span></p>
+            <input type="text" id="regAcc" placeholder="Account Number (UBIXXXX)">
+            <input type="password" id="regPass" placeholder="Password">
+            <button class="action-btn" onclick="handleRegister()">CREATE ACCOUNT</button>
         </div>
 
         <div id="login" class="glass-card hidden">
-            <h2 style="color:#1a2a6c">Secure Sign In</h2>
-            <input type="text" id="logAcc" placeholder="Account ID (UBIXXXX)">
+            <h2 style="color:#f1c40f">Secure Login</h2>
+            <input type="text" id="logAcc" placeholder="UBI Account ID">
             <input type="password" id="logPass" placeholder="Password">
-            <button class="main-btn" onclick="handleLogin()">Login to Dashboard</button>
+            <button class="action-btn" onclick="handleLogin()">ACCESS PORTAL</button>
         </div>
 
         <div id="dashboard" class="glass-card dashboard-box hidden">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h3 style="margin:0; color:#1a2a6c">Welcome back, <span id="uName">User</span></h3>
-                    <p style="margin:0; font-size:12px; color:#718096;">Account ID: <span id="uAcc" style="font-weight:600">UBI0000</span></p>
-                </div>
-                <button onclick="location.reload()" style="background:#edf2f7; color:#4a5568; border:none; padding:8px 18px; border-radius:8px; cursor:pointer; font-weight:600;">Sign Out</button>
+            <div style="display: flex; justify-content: space-between;">
+                <h3>Welcome, <span id="uName" style="color:#f1c40f">User</span></h3>
+                <p style="font-size: 12px; opacity: 0.7;">ID: <span id="uAcc">UBI0000</span></p>
             </div>
 
-            <div class="balance-card">
-                <p style="margin:0; font-size:12px; opacity:0.8; letter-spacing:1px;">TOTAL AVAILABLE BALANCE</p>
-                <h2 id="uBal" style="margin:10px 0 0; font-size: 2.5rem; font-weight:700;">₹ 5,000.00</h2>
+            <div class="balance-strip">
+                <span style="font-weight:600; font-size:14px;">AVAILABLE BALANCE</span>
+                <span id="uBal" style="font-size: 2rem; font-weight:700; color:#f1c40f;">₹ 5,000.00</span>
             </div>
 
-            <h4 style="margin:25px 0 12px; color:#2d3748; font-size:16px;">Transfer Funds</h4>
-            <input type="text" id="tAcc" placeholder="Receiver UBI ID (e.g. UBI5678)">
+            <h4 style="margin-top: 25px;">New Transfer</h4>
+            <input type="text" id="tAcc" placeholder="Recipient Account (UBIXXXX)">
             <div style="display: flex; gap: 10px;">
-                <input type="text" id="tCard" placeholder="16-Digit Card Number" maxlength="16">
-                <input type="text" id="tCvv" placeholder="CVV" maxlength="3" style="width:80px">
+                <input type="text" id="tCard" placeholder="16 Digit Card Number" maxlength="16">
+                <input type="text" id="tCvv" placeholder="CVV" maxlength="3" style="width:70px">
                 <input type="text" id="tDate" placeholder="MM/YY" maxlength="5" style="width:100px">
             </div>
             <input type="number" id="tAmt" placeholder="Amount (₹)">
-            <button class="main-btn" onclick="doTransfer()" style="margin-top:10px;">Confirm & Transfer</button>
+            <button class="action-btn" onclick="doTransfer()">COMPLETE TRANSACTION</button>
 
-            <h4 style="margin:30px 0 10px; font-size:14px; color:#718096; text-transform:uppercase; letter-spacing:1px;">Recent Activity History</h4>
-            <div class="history-wrap">
-                <table>
-                    <thead>
-                        <tr><th>Date & Time</th><th>Beneficiary</th><th style="text-align:right">Amount</th></tr>
-                    </thead>
-                    <tbody id="hBody"></tbody>
-                </table>
-            </div>
+            <h4 style="margin-top: 30px; font-size:14px; border-bottom: 1px solid #8e44ad; padding-bottom: 5px;">RECENT ACTIVITY</h4>
+            <table class="history-table">
+                <thead>
+                    <tr><th>Time</th><th>To Account</th><th style="text-align:right">Amount</th></tr>
+                </thead>
+                <tbody id="hBody"></tbody>
+            </table>
         </div>
     </div>
 
@@ -123,7 +118,10 @@
         let current = "";
 
         function showPage(id) {
-            ['home', 'register', 'login', 'dashboard'].forEach(p => document.getElementById(p).classList.add('hidden'));
+            ['home', 'register', 'login', 'dashboard'].forEach(p => {
+                const el = document.getElementById(p);
+                if(el) el.classList.add('hidden');
+            });
             document.getElementById(id).classList.remove('hidden');
         }
 
@@ -131,10 +129,10 @@
             let n = document.getElementById('regName').value;
             let a = document.getElementById('regAcc').value;
             let p = document.getElementById('regPass').value;
-            if (a.startsWith("UBI") && a.length === 7 && p !== "") {
+            if (a.startsWith("UBI") && a.length === 7) {
                 users[a] = { name: n, pass: p, bal: 5000 };
-                alert("Account created successfully!"); showPage('login');
-            } else { alert("Account ID must be exactly UBI + 4 digits (e.g. UBI1234)"); }
+                alert("Account Verified."); showPage('login');
+            } else { alert("ID format: UBI + 4 digits"); }
         }
 
         function handleLogin() {
@@ -146,7 +144,7 @@
                 document.getElementById('uAcc').innerText = a;
                 document.getElementById('uBal').innerText = `₹ ${users[a].bal.toLocaleString()}.00`;
                 showPage('dashboard');
-            } else { alert("Login failed. Check ID and Password."); }
+            } else { alert("Access Denied."); }
         }
 
         function doTransfer() {
@@ -158,10 +156,9 @@
                 users[current].bal -= amt;
                 document.getElementById('uBal').innerText = `₹ ${users[current].bal.toLocaleString()}.00`;
                 const row = document.getElementById('hBody').insertRow(0);
-                const time = new Date().toLocaleString([], {hour: '2-digit', minute:'2-digit'});
-                row.innerHTML = `<td>${time}</td><td>${acc}</td><td style="text-align:right;"><span class="status-badge">-₹${amt.toLocaleString()}</span></td>`;
-                alert("Transfer completed and history updated.");
-            } else { alert("Validation failed! Check 16-digit card, receiver ID, or balance."); }
+                row.innerHTML = `<td>${new Date().toLocaleTimeString()}</td><td>${acc}</td><td style="text-align:right; color:#f1c40f;">-₹${amt}</td>`;
+                alert("Transaction Logged Successfully.");
+            } else { alert("Check 16-digit card or balance!"); }
         }
     </script>
 </body>
