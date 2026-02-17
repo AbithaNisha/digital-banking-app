@@ -21,15 +21,14 @@
     <div class="hero-container">
         <div id="welcome-section" class="fade-in">
             <h1>Welcome to <span class="highlight">UBI</span> Bank</h1>
-            <p class="subtitle">Secure Digital Banking Experience.</p>
+            <p class="subtitle">Experience secure and premium digital banking.</p>
             <div class="action-buttons">
-                <button class="primary-btn" onclick="showSection('signup-form')">Create Account</button>
-                <button class="secondary-btn" onclick="showSection('login-form')">Login Now</button>
+                <button class="primary-btn" onclick="showSection('signup-form')">Get Started</button>
             </div>
         </div>
 
         <div id="signup-form" class="glass-form" style="display: none;">
-            <h2>Create New Account</h2>
+            <h2>Create Account</h2>
             <input type="text" id="regName" placeholder="Full Name" class="premium-input">
             <input type="text" id="regAcc" placeholder="Account Number (Must start with UBI)" class="premium-input">
             <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
@@ -42,33 +41,40 @@
             <input type="text" id="loginAcc" placeholder="Account Number (e.g. UBI123)" class="premium-input">
             <input type="password" id="loginPass" placeholder="Password" class="premium-input">
             <button class="primary-btn" onclick="handleLogin()">Sign In</button>
-            <p onclick="showSection('signup-form')" class="back-link">New here? Create Account</p>
+            <p onclick="showSection('signup-form')" class="back-link">New user? Signup</p>
         </div>
 
-        <div id="dashboard" class="glass-form" style="display: none; width: 600px;">
-            <h2>Welcome, <span id="user-display">User</span></h2>
-            <p style="font-size: 0.8rem; opacity: 0.7;">My Account: <span id="acc-display">0000</span></p>
+        <div id="dashboard" class="glass-form" style="display: none; width: 550px;">
+            <h2 style="margin-bottom: 5px;">Transaction</h2>
+            <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 20px;">Welcome, <span id="user-display">User</span> (<span id="acc-display">0000</span>)</p>
             
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                <p>Current Balance</p>
-                <h1 id="balance-display">₹ 5,000.00</h1>
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; margin-bottom: 25px;">
+                <p style="font-size: 0.9rem; opacity: 0.7;">Current Balance</p>
+                <h1 id="balance-display" style="font-size: 2.5rem; margin-top: 5px;">₹ 5,000.00</h1>
             </div>
 
-            <div style="margin-top: 25px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: left;">
-                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">Send Money to Another Person</h3>
-                <input type="text" id="targetAcc" placeholder="Receiver Account (Starts with UBI)" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
-                <input type="number" id="transferAmount" placeholder="Enter Amount" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
-                <button class="primary-btn" style="width: 100%; background: #00a8ff;" onclick="handleTransfer()">OK / Send Money</button>
+            <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+                <h3 style="font-size: 1rem; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Credit Card Transfer</h3>
+                
+                <input type="text" id="targetAcc" placeholder="Receiver Account (Starts with UBI)" class="premium-input" style="margin-bottom: 12px;">
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                    <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input" style="flex: 2;">
+                    <input type="text" id="cardExpiry" placeholder="MM/YY" class="premium-input" style="flex: 1;">
+                </div>
+
+                <input type="number" id="transferAmount" placeholder="Enter Amount (₹)" class="premium-input" style="margin-bottom: 15px;">
+                
+                <button class="primary-btn" style="width: 100%; background: #00a8ff; margin: 0;" onclick="handleTransfer()">Send Money</button>
             </div>
 
-            <p onclick="location.reload()" class="back-link" style="margin-top: 20px;">Logout</p>
+            <p onclick="location.reload()" class="back-link" style="margin-top: 25px;">Logout</p>
         </div>
     </div>
 
     <script>
-        // Database to store users (Signup panna inga store aagum)
         let users = {
-            "UBI456": { name: "Arun", pass: "456", balance: 3000 } // Pre-existing user to test transfer
+            "UBI456": { name: "Arun", pass: "456", balance: 3000 }
         };
         let currentUser = "";
 
@@ -80,25 +86,23 @@
             document.getElementById(id).style.display = 'block';
         }
 
-        // SIGNUP LOGIC
         function handleSignup() {
             let name = document.getElementById('regName').value;
             let acc = document.getElementById('regAcc').value;
             let pass = document.getElementById('regPass').value;
 
             if (!acc.startsWith("UBI")) {
-                alert("Please enter a valid account number (Must start with UBI)");
+                alert("Receiver Account must start with 'UBI'!");
                 return;
             }
 
             if(name && acc && pass) {
                 users[acc] = { name: name, pass: pass, balance: 5000 };
-                alert("Signup Successful! Now you can Login.");
+                alert("Registration Successful!");
                 showSection('login-form');
-            } else { alert("Fill all fields!"); }
+            } else { alert("Please fill all fields!"); }
         }
 
-        // LOGIN LOGIC
         function handleLogin() {
             let acc = document.getElementById('loginAcc').value;
             let pass = document.getElementById('loginPass').value;
@@ -109,20 +113,20 @@
                 document.getElementById('acc-display').innerText = acc;
                 document.getElementById('balance-display').innerText = `₹ ${users[acc].balance.toLocaleString()}.00`;
                 showSection('dashboard');
-            } else { alert("Invalid Account or Password!"); }
+            } else { alert("Invalid Credentials!"); }
         }
 
-        // TRANSACTION LOGIC (Fill another person details)
         function handleTransfer() {
             let target = document.getElementById('targetAcc').value;
+            let card = document.getElementById('cardNumber').value;
             let amount = Number(document.getElementById('transferAmount').value);
 
             if (!target.startsWith("UBI")) {
-                alert("Please enter a valid account number");
+                alert("Receiver Account must start with 'UBI'!");
                 return;
             }
-            if (target === currentUser) {
-                alert("You cannot transfer to yourself!");
+            if (card.length !== 16 || isNaN(card)) {
+                alert("Please enter a valid 16-digit Card Number!");
                 return;
             }
             if (!users[target]) {
@@ -130,18 +134,21 @@
                 return;
             }
             if (amount > users[currentUser].balance || amount <= 0) {
-                alert("Invalid amount or Insufficient balance!");
+                alert("Insufficient funds or invalid amount!");
                 return;
             }
 
-            // Real Transaction
+            // Transaction Logic
             users[currentUser].balance -= amount;
             users[target].balance += amount;
 
             document.getElementById('balance-display').innerText = `₹ ${users[currentUser].balance.toLocaleString()}.00`;
-            alert(`₹${amount} Sent to ${users[target].name} Successfully!`);
+            alert(`Transfer Successful! ₹${amount} sent to ${users[target].name}`);
             
+            // Clear inputs
             document.getElementById('targetAcc').value = "";
+            document.getElementById('cardNumber').value = "";
+            document.getElementById('cardExpiry').value = "";
             document.getElementById('transferAmount').value = "";
         }
     </script>
