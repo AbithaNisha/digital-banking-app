@@ -16,11 +16,11 @@ pipeline {
         }
 
         stage('Deploy App') {
-            steps {
-                // Pazhaya container-ah remove pannitu fresh-ah run pannuvom
-                bat 'docker rm -f banking-app || echo "No old container to remove"'
-                bat 'docker run -d --name banking-app -p 3001:3000 digital-banking-app:latest'
-            }
-        }
+    steps {
+        bat 'docker rm -f banking-app || echo "No old container"'
+        // Port-ah 3002-nu maathi paarunga
+        bat 'docker run -d --name banking-app -p 3002:3000 digital-banking-app:latest'
+    }
+}
     }
 }
