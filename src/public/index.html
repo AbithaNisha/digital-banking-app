@@ -46,7 +46,7 @@
             <p onclick="showWelcome()" class="back-link">← Back to Home</p>
         </div>
 
-       <div id="dashboard" class="glass-form" style="display: none; width: 600px;">
+        <div id="dashboard" class="glass-form" style="display: none; width: 600px;">
             <h2>Welcome, <span id="user-display">User</span></h2>
             <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
             
@@ -60,6 +60,16 @@
                 <button class="primary-btn" style="background: #dc3545; flex: 1; margin:0;" onclick="doTransaction('Debit')">➖ Debit</button>
             </div>
 
+            <div style="margin-top: 25px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: left;">
+                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">Credit Card Transfer</h3>
+                <input type="text" id="targetAcc" placeholder="Receiver Account Number" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input" style="padding: 10px; flex: 2;">
+                    <input type="text" id="cardExpiry" placeholder="MM/YY" class="premium-input" style="padding: 10px; flex: 1;">
+                </div>
+                <button class="primary-btn" style="width: 100%; margin: 10px 0 0 0; background: #00a8ff;" onclick="handleCardTransfer()">Send Money</button>
+            </div>
+
             <div style="margin-top: 25px; text-align: left;">
                 <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;">Recent Transactions</h3>
                 <div style="max-height: 150px; overflow-y: auto;">
@@ -71,8 +81,7 @@
                                 <th style="text-align: right; padding: 5px;">Amount</th>
                             </tr>
                         </thead>
-                        <tbody id="transaction-rows">
-                            </tbody>
+                        <tbody id="transaction-rows"></tbody>
                     </table>
                 </div>
             </div>
@@ -81,20 +90,12 @@
         </div>
     </div>
 
-    <div class="footer-info">
-        <span>📞 +91 98765 43210</span>
-        <span>📧 support@ubibank.com</span>
-        <span>🏢 Chennai, TN</span>
-    </div>
-
     <script>
-        // Database simulation
         let savedAcc = "";
         let savedPass = "";
         let savedName = "";
         let currentBalance = 5000;
 
-        // Navigation Logic
         function hideAll() {
             document.getElementById('welcome-section').style.display = 'none';
             document.getElementById('login-form').style.display = 'none';
@@ -106,66 +107,70 @@
         function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
         function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
 
-        // Signup Logic
         function handleSignup() {
             savedName = document.getElementById('regName').value;
             savedAcc = document.getElementById('regAcc').value;
             savedPass = document.getElementById('regPass').value;
-
             if(savedName && savedAcc && savedPass) {
-                alert("Registration Successful! Now please login with Account: " + savedAcc);
+                alert("Registration Successful! Account: " + savedAcc);
                 showLogin();
-            } else {
-                alert("Please fill all fields!");
-            }
+            } else { alert("Please fill all fields!"); }
         }
 
-        // Login Logic
         function handleLogin() {
             const inputAcc = document.getElementById('loginAcc').value;
             const inputPass = document.getElementById('loginPass').value;
-
             if (inputAcc === savedAcc && inputPass === savedPass && savedAcc !== "") {
                 document.getElementById('user-display').innerText = savedName;
                 document.getElementById('acc-display').innerText = savedAcc;
                 hideAll();
                 document.getElementById('dashboard').style.display = 'block';
-            } else {
-                alert("Invalid Credentials! Did you register first?");
-            }
+            } else { alert("Invalid Credentials!"); }
         }
 
-        // Updated Transaction Logic with History
         function doTransaction(type) {
             let amount = prompt(`Enter amount to ${type}:`);
             if (amount && !isNaN(amount) && amount > 0) {
                 let numAmount = Number(amount);
-                
                 if (type === 'Debit' && numAmount > currentBalance) {
-                    alert("Insufficient funds! (Kashu pathala!)");
+                    alert("Insufficient funds!");
                     return;
                 }
-
-                // Balance Update
                 currentBalance = (type === 'Credit') ? currentBalance + numAmount : currentBalance - numAmount;
-                document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
-
-                // Add to History Table
-                addHistoryRow(type, numAmount);
-                
-                alert(`${type} of ₹${numAmount} successful!`);
-            } else if (amount !== null) {
-                alert("Please enter a valid amount!");
+                updateUI(type, numAmount);
             }
         }
 
-        function addHistoryRow(type, amount) {
+        // Logic for Credit Card Transfer
+        function handleCardTransfer() {
+            const target = document.getElementById('targetAcc').value;
+            const card = document.getElementById('cardNumber').value;
+            if (target === "" || card.length < 16) {
+                alert("Enter valid Receiver Account and 16-digit Card Number!");
+                return;
+            }
+            let amount = prompt("Enter amount to transfer via Card:");
+            if (amount && !isNaN(amount) && amount > 0) {
+                let numAmount = Number(amount);
+                // Card transfer adds to current account simulation
+                currentBalance += numAmount; 
+                updateUI(`Card Trf to ${target}`, numAmount, true);
+                alert("Transfer Successful!");
+                document.getElementById('targetAcc').value = "";
+                document.getElementById('cardNumber').value = "";
+            }
+        }
+
+        function updateUI(type, amount, isCard = false) {
+            document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
             const tbody = document.getElementById('transaction-rows');
-            const row = tbody.insertRow(0); // Pudhu transaction-a mela add pannum
-            
+            const row = tbody.insertRow(0);
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const color = (type === 'Credit') ? '#28a745' : '#dc3545';
-            const sign = (type === 'Credit') ? '+' : '-';
+            
+            // Credit/Card Transfer = Green, Debit = Red
+            const isCredit = type.includes('Credit') || isCard;
+            const color = isCredit ? '#28a745' : '#dc3545';
+            const sign = isCredit ? '+' : '-';
 
             row.innerHTML = `
                 <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.7;">${time}</td>
