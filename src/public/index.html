@@ -13,19 +13,16 @@
         <div class="logo">UBI <span>Bank</span></div>
         <div class="nav-links">
             <a href="#" onclick="showWelcome()">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
             <a href="#" class="nav-btn" onclick="showLogin()">Login</a>
         </div>
     </div>
 
     <div class="hero-container">
         <div id="welcome-section" class="fade-in">
-            <h1>Welcome to <span class="highlight">UNIX</span> Bank Portal</h1>
+            <h1>Welcome to <span class="highlight">UBI</span> Bank Portal</h1>
             <p class="subtitle">Experience the next generation of secure digital banking.</p>
             <div class="action-buttons">
                 <button class="primary-btn" onclick="showLogin()">Get Started</button>
-                <button class="secondary-btn" onclick="showSignup()">Create Account</button>
             </div>
         </div>
 
@@ -37,31 +34,17 @@
             <p onclick="showWelcome()" class="back-link">← Back to Home</p>
         </div>
 
-        <div id="signup-form" class="glass-form" style="display: none;">
-            <h2>Join UBI Bank</h2>
-            <input type="text" id="regName" placeholder="Full Name" class="premium-input">
-            <input type="text" id="regAcc" placeholder="Account Number (Must start with UBI)" class="premium-input">
-            <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
-            <button class="primary-btn" onclick="handleSignup()">Register</button>
-            <p onclick="showWelcome()" class="back-link">← Back to Home</p>
-        </div>
-
         <div id="dashboard" class="glass-form" style="display: none; width: 600px;">
             <h2>Welcome, <span id="user-display">User</span></h2>
             <p style="font-size: 0.8rem; opacity: 0.7;">Account: <span id="acc-display">0000</span></p>
             
             <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
                 <p>Current Balance</p>
-                <h1 id="balance-display">₹ 5,000.00</h1>
-            </div>
-            
-            <div style="display: flex; gap: 10px;">
-                <button class="primary-btn" style="background: #28a745; flex: 1; margin:0;" onclick="doTransaction('Credit')">➕ Credit</button>
-                <button class="primary-btn" style="background: #dc3545; flex: 1; margin:0;" onclick="doTransaction('Debit')">➖ Debit</button>
+                <h1 id="balance-display">₹ 0.00</h1>
             </div>
 
             <div style="margin-top: 25px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: left;">
-                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">Credit Card Transfer</h3>
+                <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">Online Money Transfer</h3>
                 <input type="text" id="targetAcc" placeholder="Receiver Account (Starts with UBI)" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
                 <div style="display: flex; gap: 5px;">
                     <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input" style="padding: 10px; flex: 2;">
@@ -72,11 +55,11 @@
 
             <div style="margin-top: 25px; text-align: left;">
                 <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;">Recent Transactions</h3>
-                <div style="max-height: 150px; overflow-y: auto;">
-                    <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;" id="history-table">
+                <div style="max-height: 200px; overflow-y: auto;">
+                    <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
                         <thead>
                             <tr style="opacity: 0.6; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <th style="text-align: left; padding: 5px;">Time</th>
+                                <th style="text-align: left; padding: 5px;">Date & Time</th>
                                 <th style="text-align: left; padding: 5px;">Type</th>
                                 <th style="text-align: right; padding: 5px;">Amount</th>
                             </tr>
@@ -91,125 +74,111 @@
     </div>
 
     <script>
-    let savedAcc = "";
-    let savedPass = "";
-    let savedName = "";
-    let currentBalance = 5000;
+        // 1. DATABASE SIMULATION
+        let accounts = {
+            "UBI123": { name: "Nisha", pass: "123", balance: 5000 },
+            "UBI456": { name: "Arun", pass: "456", balance: 3000 }
+        };
 
-    function hideAll() {
-        document.getElementById('welcome-section').style.display = 'none';
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('signup-form').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'none';
-    }
+        let currentUserID = "";
 
-    function showLogin() { hideAll(); document.getElementById('login-form').style.display = 'block'; }
-    function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
-    function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
-
-    function handleSignup() {
-        savedName = document.getElementById('regName').value;
-        savedAcc = document.getElementById('regAcc').value;
-        savedPass = document.getElementById('regPass').value;
-
-        if (!savedAcc.startsWith("UBI")) {
-            alert("Please enter a valid account number"); // Simplified as you requested
-            return;
+        function hideAll() {
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
         }
 
-        if(savedName && savedAcc && savedPass) {
-            alert("Registration Successful!");
-            showLogin();
-        } else { alert("Please fill all fields!"); }
-    }
+        function showLogin() { hideAll(); document.getElementById('login-form').style.display = 'block'; }
+        function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
 
-    function handleLogin() {
-        const inputAcc = document.getElementById('loginAcc').value;
-        const inputPass = document.getElementById('loginPass').value;
-        if (inputAcc === savedAcc && inputPass === savedPass && savedAcc !== "") {
-            document.getElementById('user-display').innerText = savedName;
-            document.getElementById('acc-display').innerText = savedAcc;
-            hideAll();
-            document.getElementById('dashboard').style.display = 'block';
-        } else { alert("Invalid Credentials!"); }
-    }
+        // 2. LOGIN LOGIC
+        function handleLogin() {
+            const acc = document.getElementById('loginAcc').value;
+            const pass = document.getElementById('loginPass').value;
 
-    function doTransaction(type) {
-        let amount = prompt(`Enter amount to ${type}:`);
-        if (amount && !isNaN(amount) && Number(amount) > 0) {
-            let numAmount = Number(amount);
-            if (type === 'Debit' && numAmount > currentBalance) {
-                alert("Insufficient funds!");
-                return;
+            if (accounts[acc] && accounts[acc].pass === pass) {
+                currentUserID = acc;
+                document.getElementById('user-display').innerText = accounts[acc].name;
+                document.getElementById('acc-display').innerText = acc;
+                updateBalanceDisplay();
+                hideAll();
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert("Invalid Credentials!");
             }
-            currentBalance = (type === 'Credit') ? currentBalance + numAmount : currentBalance - numAmount;
-            updateUI(type, numAmount);
-        }
-    }
-
-    // Logic for Self-Transfer Block & Date Formatting
-    function handleCardTransfer() {
-        const target = document.getElementById('targetAcc').value;
-        const card = document.getElementById('cardNumber').value;
-        const isNumeric = /^\d+$/; 
-
-        // 1. Validation Logic
-        if (!target.startsWith("UBI")) {
-            alert("Please enter a valid account number"); 
-            return;
         }
 
-        // 2. SAME ACCOUNT CHECK (Nammakey anuppa mudiyaathu)
-        if (target === savedAcc) {
-            alert("You cannot transfer money to your own account!");
-            return;
-        }
-
-        if (card.length !== 16 || !isNumeric.test(card)) {
-            alert("Please enter a valid 16-digit Card Number!");
-            return;
-        }
-
-        let amount = prompt("Enter amount to transfer:");
-        if (amount && !isNaN(amount) && Number(amount) > 0) {
-            let numAmount = Number(amount);
-            if (numAmount > currentBalance) {
-                alert("Insufficient funds!");
-                return;
-            }
-
-            currentBalance -= numAmount; 
-            updateUI(`Sent to ${target}`, numAmount); 
-            alert(`₹${numAmount} successfully transferred!`);
+        // 3. TRANSFER LOGIC (Online Transaction)
+        function handleCardTransfer() {
+            const target = document.getElementById('targetAcc').value;
+            const card = document.getElementById('cardNumber').value;
             
-            document.getElementById('targetAcc').value = "";
-            document.getElementById('cardNumber').value = "";
+            // Validation: UBI Prefix Check
+            if (!target.startsWith("UBI")) {
+                alert("Please enter a valid account number");
+                return;
+            }
+
+            // Validation: Self Transfer Check
+            if (target === currentUserID) {
+                alert("You cannot transfer money to your own account!");
+                return;
+            }
+
+            // Validation: Target Account Existence Check
+            if (!accounts[target]) {
+                alert("Receiver account not found in UBI database!");
+                return;
+            }
+
+            // Validation: Card Number Check
+            if (card.length !== 16 || isNaN(card)) {
+                alert("Please enter a valid 16-digit Card Number!");
+                return;
+            }
+
+            let amount = prompt("Enter amount to transfer:");
+            let numAmount = Number(amount);
+
+            if (numAmount > 0 && numAmount <= accounts[currentUserID].balance) {
+                // Deduct from Sender, Add to Receiver
+                accounts[currentUserID].balance -= numAmount;
+                accounts[target].balance += numAmount;
+
+                updateBalanceDisplay();
+                addTransactionToTable(`Sent to ${target}`, numAmount);
+                alert(`₹${numAmount} sent successfully to ${accounts[target].name}`);
+                
+                // Clear Inputs
+                document.getElementById('targetAcc').value = "";
+                document.getElementById('cardNumber').value = "";
+            } else {
+                alert("Insufficient funds or invalid amount!");
+            }
         }
-    }
 
-    function updateUI(type, amount) {
-        document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
-        const tbody = document.getElementById('transaction-rows');
-        const row = tbody.insertRow(0);
+        function updateBalanceDisplay() {
+            document.getElementById('balance-display').innerText = `₹ ${accounts[currentUserID].balance.toLocaleString()}.00`;
+        }
 
-        // 3. DATE LOGIC (DD/MM/YYYY + Time)
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('en-GB'); // DD/MM/YYYY
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const fullDateTime = `${dateStr} ${timeStr}`;
-        
-        const isCredit = type === 'Credit';
-        const color = isCredit ? '#28a745' : '#dc3545';
-        const sign = isCredit ? '+' : '-';
+        // 4. DATE LOGIC & TABLE UPDATE
+        function addTransactionToTable(type, amount) {
+            const tbody = document.getElementById('transaction-rows');
+            const row = tbody.insertRow(0);
 
-        row.innerHTML = `
-            <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.8; font-size: 0.75rem;">${fullDateTime}</td>
-            <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 500;">${type}</td>
-            <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: ${color}; font-weight: bold;">
-                ${sign} ₹${amount.toLocaleString()}
-            </td>
-        `;
-    }
-</script>
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB'); // DD/MM/YYYY
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            const fullStamp = `${dateStr} ${timeStr}`;
+
+            row.innerHTML = `
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.7;">${fullStamp}</td>
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 500;">${type}</td>
+                <td style="padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: #dc3545; font-weight: bold;">
+                    - ₹${amount.toLocaleString()}
+                </td>
+            `;
+        }
+    </script>
 </body>
 </html>
