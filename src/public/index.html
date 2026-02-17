@@ -31,7 +31,7 @@
 
         <div id="login-form" class="glass-form" style="display: none;">
             <h2>Secure Login</h2>
-            <input type="text" id="loginAcc" placeholder="Account Number" class="premium-input">
+            <input type="text" id="loginAcc" placeholder="Account Number (e.g. UBI123)" class="premium-input">
             <input type="password" id="loginPass" placeholder="Password" class="premium-input">
             <button class="primary-btn" onclick="handleLogin()">Sign In</button>
             <p onclick="showWelcome()" class="back-link">← Back to Home</p>
@@ -40,7 +40,7 @@
         <div id="signup-form" class="glass-form" style="display: none;">
             <h2>Join UBI Bank</h2>
             <input type="text" id="regName" placeholder="Full Name" class="premium-input">
-            <input type="text" id="regAcc" placeholder="Create Account Number" class="premium-input">
+            <input type="text" id="regAcc" placeholder="Account Number (Must start with UBI)" class="premium-input">
             <input type="password" id="regPass" placeholder="Create Password" class="premium-input">
             <button class="primary-btn" onclick="handleSignup()">Register</button>
             <p onclick="showWelcome()" class="back-link">← Back to Home</p>
@@ -62,7 +62,7 @@
 
             <div style="margin-top: 25px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: left;">
                 <h3 style="font-size: 1rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">Credit Card Transfer</h3>
-                <input type="text" id="targetAcc" placeholder="Receiver Account Number" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
+                <input type="text" id="targetAcc" placeholder="Receiver Account (Starts with UBI)" class="premium-input" style="padding: 10px; margin-bottom: 10px;">
                 <div style="display: flex; gap: 5px;">
                     <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input" style="padding: 10px; flex: 2;">
                     <input type="text" id="cardExpiry" placeholder="MM/YY" class="premium-input" style="padding: 10px; flex: 1;">
@@ -107,10 +107,17 @@
         function showSignup() { hideAll(); document.getElementById('signup-form').style.display = 'block'; }
         function showWelcome() { hideAll(); document.getElementById('welcome-section').style.display = 'block'; }
 
+        // 1. Updated Signup with UBI Prefix Validation
         function handleSignup() {
             savedName = document.getElementById('regName').value;
             savedAcc = document.getElementById('regAcc').value;
             savedPass = document.getElementById('regPass').value;
+
+            if (!savedAcc.startsWith("UBI")) {
+                alert("Invalid Account Number! It must start with 'UBI' (e.g., UBI101)");
+                return;
+            }
+
             if(savedName && savedAcc && savedPass) {
                 alert("Registration Successful! Account: " + savedAcc);
                 showLogin();
@@ -130,45 +137,62 @@
 
         function doTransaction(type) {
             let amount = prompt(`Enter amount to ${type}:`);
-            if (amount && !isNaN(amount) && amount > 0) {
+            if (amount && !isNaN(amount) && Number(amount) > 0) {
                 let numAmount = Number(amount);
                 if (type === 'Debit' && numAmount > currentBalance) {
-                    alert("Insufficient funds!");
+                    alert("Insufficient funds! (Kashu pathala!)");
                     return;
                 }
                 currentBalance = (type === 'Credit') ? currentBalance + numAmount : currentBalance - numAmount;
-                updateUI(type, numAmount);
+                updateUI(type, numAmount, false);
             }
         }
 
-        // Logic for Credit Card Transfer
+        // 2. Updated Card Transfer with Debit Logic & UBI Target Check
         function handleCardTransfer() {
             const target = document.getElementById('targetAcc').value;
             const card = document.getElementById('cardNumber').value;
-            if (target === "" || card.length < 16) {
-                alert("Enter valid Receiver Account and 16-digit Card Number!");
+            const isNumeric = /^\d+$/; 
+
+            if (!target.startsWith("UBI")) {
+                alert("Receiver Account must start with 'UBI'!");
                 return;
             }
+
+            if (card.length !== 16 || !isNumeric.test(card)) {
+                alert("Please enter a valid 16-digit numeric Card Number!");
+                return;
+            }
+
             let amount = prompt("Enter amount to transfer via Card:");
-            if (amount && !isNaN(amount) && amount > 0) {
+            if (amount && !isNaN(amount) && Number(amount) > 0) {
                 let numAmount = Number(amount);
-                // Card transfer adds to current account simulation
-                currentBalance += numAmount; 
-                updateUI(`Card Trf to ${target}`, numAmount, true);
-                alert("Transfer Successful!");
+
+                if (numAmount > currentBalance) {
+                    alert("Insufficient funds in your account for this transfer!");
+                    return;
+                }
+
+                // Real Debit: Balance kuraiyum
+                currentBalance -= numAmount; 
+                updateUI(`Sent to ${target}`, numAmount, false); 
+                alert(`₹${numAmount} successfully transferred to ${target}`);
+                
                 document.getElementById('targetAcc').value = "";
                 document.getElementById('cardNumber').value = "";
+            } else {
+                alert("Invalid Amount!");
             }
         }
 
-        function updateUI(type, amount, isCard = false) {
+        function updateUI(type, amount, isCreditOverride) {
             document.getElementById('balance-display').innerText = `₹ ${currentBalance.toLocaleString()}.00`;
             const tbody = document.getElementById('transaction-rows');
             const row = tbody.insertRow(0);
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
-            // Credit/Card Transfer = Green, Debit = Red
-            const isCredit = type.includes('Credit') || isCard;
+            // Logic for colors: Credit is Green (+), Sent/Debit is Red (-)
+            const isCredit = type === 'Credit';
             const color = isCredit ? '#28a745' : '#dc3545';
             const sign = isCredit ? '+' : '-';
 
