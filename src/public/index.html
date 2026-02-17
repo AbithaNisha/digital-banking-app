@@ -20,55 +20,94 @@
     </div>
 
     <div class="hero-container">
-        <div id="welcome-section" class="fade-in">
-            <h1>Welcome to <span class="highlight">UNIX</span> Bank Portal</h1>
-            <p class="subtitle">Experience the next generation of secure digital banking.</p>
-            <div class="action-buttons">
-                <button class="primary-btn" onclick="showLogin()">Get Started</button>
-                <button class="secondary-btn" onclick="showSignup()">Create Account</button>
-            </div>
-        </div>
-
-        <div id="login-form" class="glass-form" style="display: none;">
-            <h2>Secure Login</h2>
-            <input type="email" placeholder="Email Address" class="premium-input">
-            <input type="password" placeholder="Password" class="premium-input">
-            <button class="primary-btn">Sign In</button>
-            <p onclick="showWelcome()" class="back-link">← Back to Home</p>
-        </div>
-
-        <div id="signup-form" class="glass-form" style="display: none;">
-            <h2>Join UBI Bank</h2>
-            <input type="text" placeholder="Full Name" class="premium-input">
-            <input type="email" placeholder="Email Address" class="premium-input">
-            <input type="password" placeholder="Password" class="premium-input">
-            <button class="primary-btn">Register</button>
-            <p onclick="showWelcome()" class="back-link">← Back to Home</p>
+    <div id="welcome-section" class="fade-in">
+        <h1>Welcome to <span class="highlight">UNIX</span> Bank Portal</h1>
+        <p class="subtitle">Experience the next generation of secure digital banking.</p>
+        <div class="action-buttons">
+            <button class="primary-btn" onclick="showLogin()">Get Started</button>
+            <button class="secondary-btn" onclick="showSignup()">Create Account</button>
         </div>
     </div>
 
-    <div class="footer-info">
-        <span>📞 +91 98765 43210</span>
-        <span>📧 support@ubibank.com</span>
-        <span>🏢 Chennai, TN</span>
+    <div id="login-form" class="glass-form" style="display: none;">
+        <h2>Secure Login</h2>
+        <input type="email" id="userEmail" placeholder="Email Address" class="premium-input">
+        <input type="password" id="userPass" placeholder="Password" class="premium-input">
+        <button class="primary-btn" onclick="handleLogin()">Sign In</button>
+        <p onclick="showWelcome()" class="back-link">← Back to Home</p>
     </div>
 
-    <script>
-        function showLogin() {
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'none';
-            document.getElementById('login-form').style.display = 'block';
+    <div id="signup-form" class="glass-form" style="display: none;">
+        <h2>Join UBI Bank</h2>
+        <input type="text" placeholder="Full Name" class="premium-input">
+        <input type="email" placeholder="Email Address" class="premium-input">
+        <input type="password" placeholder="Password" class="premium-input">
+        <button class="primary-btn" onclick="showLogin()">Register</button>
+        <p onclick="showWelcome()" class="back-link">← Back to Home</p>
+    </div>
+
+    <div id="dashboard" class="glass-form" style="display: none; width: 500px;">
+        <h2>Bank Dashboard</h2>
+        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
+            <p>Available Balance</p>
+            <h1 id="balance-display">$ 5,000.00</h1>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="primary-btn" style="background: #28a745; flex: 1;" onclick="doTransaction('Deposit')">Deposit</button>
+            <button class="primary-btn" style="background: #dc3545; flex: 1;" onclick="doTransaction('Withdraw')">Withdraw</button>
+        </div>
+        <p onclick="location.reload()" class="back-link" style="margin-top: 20px;">Logout</p>
+    </div>
+</div>
+
+<script>
+    // Sections mathura logic
+    function showLogin() {
+        hideAll();
+        document.getElementById('login-form').style.display = 'block';
+    }
+    function showSignup() {
+        hideAll();
+        document.getElementById('signup-form').style.display = 'block';
+    }
+    function showWelcome() {
+        hideAll();
+        document.getElementById('welcome-section').style.display = 'block';
+    }
+    function hideAll() {
+        document.getElementById('welcome-section').style.display = 'none';
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'none';
+    }
+
+    // Login click panna Dashboard-ku poga
+    function handleLogin() {
+        const email = document.getElementById('userEmail').value;
+        const pass = document.getElementById('userPass').value;
+
+        if (email !== "" && pass !== "") {
+            hideAll();
+            document.getElementById('dashboard').style.display = 'block';
+        } else {
+            alert("Please enter details!");
         }
-        function showSignup() {
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'block';
+    }
+
+    // Money Transaction Logic
+    let currentBalance = 5000;
+    function doTransaction(type) {
+        let amount = prompt(`Enter amount to ${type}:`);
+        if (amount && !isNaN(amount)) {
+            if (type === 'Withdraw' && amount > currentBalance) {
+                alert("Insufficient funds!");
+            } else {
+                currentBalance = (type === 'Deposit') ? currentBalance + Number(amount) : currentBalance - Number(amount);
+                document.getElementById('balance-display').innerText = `$ ${currentBalance.toLocaleString()}.00`;
+                alert(`${type} successful!`);
+            }
         }
-        function showWelcome() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'none';
-            document.getElementById('welcome-section').style.display = 'block';
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
