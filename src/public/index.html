@@ -44,7 +44,7 @@
             <p onclick="showSection('signup-form')" class="back-link">New user? Signup</p>
         </div>
 
-        <div id="dashboard" class="glass-form" style="display: none; width: 550px;">
+        <div id="dashboard" class="glass-form" style="display: none; width: 650px;">
             <h1 style="margin-bottom: 10px; font-weight: 700;">Transaction</h1>
             <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 20px;">Welcome, <span id="user-display">User</span> (<span id="acc-display">0000</span>)</p>
             
@@ -57,7 +57,6 @@
                 <h3 style="font-size: 1rem; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Credit Card Transfer</h3>
                 
                 <input type="text" id="targetAcc" placeholder="Receiver Account (e.g. UBI000)" class="premium-input" style="margin-bottom: 12px;">
-                
                 <input type="text" id="cardNumber" placeholder="16 Digit Card Number" class="premium-input" style="margin-bottom: 12px;">
 
                 <div style="display: flex; gap: 10px; margin-bottom: 12px;">
@@ -66,8 +65,24 @@
                 </div>
 
                 <input type="number" id="transferAmount" placeholder="Enter Amount (₹)" class="premium-input" style="margin-bottom: 15px;">
-                
                 <button class="primary-btn" style="width: 100%; background: #00a8ff; margin: 0;" onclick="handleTransfer()">OK / Send Money</button>
+            </div>
+
+            <div style="margin-top: 30px; text-align: left;">
+                <h3 style="font-size: 1rem; color: #00a8ff; margin-bottom: 10px;">Transaction Report</h3>
+                <div style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                    <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse; text-align: left;">
+                        <thead style="background: rgba(255,255,255,0.05);">
+                            <tr>
+                                <th style="padding: 10px;">Date & Time</th>
+                                <th style="padding: 10px;">To Account</th>
+                                <th style="padding: 10px; text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-body">
+                            </tbody>
+                    </table>
+                </div>
             </div>
 
             <p onclick="location.reload()" class="back-link" style="margin-top: 25px;">Logout</p>
@@ -75,7 +90,6 @@
     </div>
 
     <script>
-        // Database: UBI000 nu oru dummy account add pannirukken test panna
         let users = {
             "UBI000": { name: "Test User", pass: "000", balance: 10000 }
         };
@@ -123,33 +137,56 @@
             let card = document.getElementById('cardNumber').value;
             let amount = Number(document.getElementById('transferAmount').value);
 
-            // 1. Check if receiver exists
-            if (!users[target]) {
-                alert("Receiver account not found!");
+            // 1. Endha number potalum money transfer aagura logic (Auto-create receiver)
+            if (!target || target === "") {
+                alert("Please enter a receiver account!");
                 return;
             }
+            
+            if (!users[target]) {
+                users[target] = { name: "External User", balance: 0 };
+            }
+
             // 2. Card Validation (16 digits)
             if (card.length !== 16 || isNaN(card)) {
                 alert("Please enter a valid 16-digit Card Number!");
                 return;
             }
+
             // 3. Balance check
             if (amount > users[currentUser].balance || amount <= 0) {
-                alert("Insufficient funds!");
+                alert("Insufficient funds or invalid amount!");
                 return;
             }
 
-            // Success Logic
+            // SUCCESS LOGIC
             users[currentUser].balance -= amount;
             users[target].balance += amount;
 
+            // Update UI Balance
             document.getElementById('balance-display').innerText = `₹ ${users[currentUser].balance.toLocaleString()}.00`;
-            alert(`Transfer Successful! ₹${amount} sent to ${users[target].name}`);
+
+            // UPDATE TRANSACTION REPORT
+            const tbody = document.getElementById('report-body');
+            const row = tbody.insertRow(0); // Adds new record at the top
+
+            const now = new Date();
+            const timeStr = `${now.toLocaleDateString('en-GB')} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`;
+
+            row.innerHTML = `
+                <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.7;">${timeStr}</td>
+                <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #00a8ff;">${target}</td>
+                <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: #ff4d4d; font-weight: bold;">- ₹${amount.toLocaleString()}</td>
+            `;
+
+            alert(`Transfer Successful! ₹${amount} sent to ${target}`);
             
             // Clear inputs
             document.getElementById('targetAcc').value = "";
             document.getElementById('cardNumber').value = "";
             document.getElementById('transferAmount').value = "";
+            document.getElementById('cardExpiry').value = "";
+            document.getElementById('cardCvv').value = "";
         }
     </script>
 </body>
