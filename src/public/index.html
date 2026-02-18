@@ -5,62 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UBI Bank | Premium Crystal</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-    * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; transition: 0.3s; }
-    
-    body {
-        margin: 0; padding: 0; min-height: 100vh;
-        background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070') no-repeat center center fixed;
-        background-size: cover; display: flex; flex-direction: column;
-        position: relative; /* Before element correct-aa work aaga */
-    }
+    /* Logo-la Gold-ah maathi Silver/White kuduthuruken */
+.logo { 
+    font-size: 26px; 
+    font-weight: 700; 
+    color: #ffffff; /* White color */
+    text-shadow: 0 0 10px rgba(142, 68, 173, 0.5); 
+}
 
-    /* BACKGROUND LIGHT-AA MAATHA INTHA OVERLAY-AI USE PANNUNGA */
-    body::before { 
-        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-        background: rgba(255, 255, 255, 0.6); /* Black-ku bathila White overlay (0.6 opacity) */
-        z-index: -1; 
-    }
+/* Hero text matrum matha idangalil Gold-ah maatriyachu */
+.hero p { 
+    font-size: 1.2rem; 
+    margin: 20px 0 40px; 
+    color: #ffffff; /* White or Light Silver */
+    font-weight: 600; 
+}
 
-    nav { 
-        display: flex; justify-content: space-between; align-items: center; 
-        padding: 15px 8%; background: rgba(142, 68, 173, 0.1); 
-        backdrop-filter: blur(10px); width: 100%; 
-        border-bottom: 1px solid rgba(142, 68, 173, 0.2); 
-    }
+/* Dashboard-la Gold-ah maathi Silver/White-ku maathiyachu */
+.glass-card h2, #uName, #uBal { 
+    color: #8e44ad !important; /* Professional Purple use pannunga */
+    text-shadow: none;
+}
 
-    .logo { font-size: 26px; font-weight: 700; color: #8e44ad; text-shadow: none; }
-    .nav-links button { background: none; border: none; margin-left: 20px; cursor: pointer; color: #333; font-weight: 600; }
-    .login-nav { background: #8e44ad !important; padding: 8px 25px; border-radius: 5px; color: white !important; }
-
-    .page-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 1; }
-    
-    /* GLASS CARD LIGHT THEME */
-    .glass-card { 
-        background: rgba(255, 255, 255, 0.85); /* Dark-ku bathila light background */
-        border: 1px solid #8e44ad; border-radius: 15px; 
-        padding: 40px; width: 100%; max-width: 500px; color: #333; /* Dark text */
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center;
-    }
-    
-    .hidden { display: none; }
-
-    .hero h1 { font-size: 3.5rem; color: #2c3e50; text-shadow: none; }
-    .hero p { font-size: 1.2rem; margin: 20px 0 40px; color: #8e44ad; font-weight: 600; }
-    
-    .action-btn { background: #8e44ad; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; }
-
-    /* INPUTS LIGHT VERSION */
-    input { width: 100%; padding: 12px; margin: 10px 0; background: #fff; border: 1px solid #ddd; border-radius: 5px; color: #333; }
-    input:focus { border-color: #8e44ad; }
-    input::placeholder { color: #999; }
-
-    .balance-strip { background: linear-gradient(90deg, #8e44ad, #9b59b6); padding: 20px; border-radius: 10px; margin: 20px 0; color: white; }
-    
-    .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #333; }
-    th { background: #f8f9fa; color: #8e44ad; border-bottom: 2px solid #8e44ad; }
-    td { border-bottom: 1px solid #eee; }
-</style>
+.balance-strip span#uBal {
+    color: #ffffff !important; /* Balance ippo white-la nalla theriyum */
+}
 </head>
 <body>
 
@@ -160,18 +129,36 @@
         }
 
         function doTransfer() {
-            let acc = document.getElementById('tAcc').value;
-            let card = document.getElementById('tCard').value;
-            let amt = Number(document.getElementById('tAmt').value);
+    let acc = document.getElementById('tAcc').value;
+    let card = document.getElementById('tCard').value;
+    let amt = Number(document.getElementById('tAmt').value);
 
-            if (card.length === 16 && acc.startsWith("UBI") && amt > 0 && amt <= users[current].bal) {
-                users[current].bal -= amt;
-                document.getElementById('uBal').innerText = `₹ ${users[current].bal.toLocaleString()}.00`;
-                const row = document.getElementById('hBody').insertRow(0);
-                row.innerHTML = `<td>${new Date().toLocaleTimeString()}</td><td>${acc}</td><td style="text-align:right; color:#f1c40f;">-₹${amt}</td>`;
-                alert("Transaction Logged Successfully.");
-            } else { alert("Check 16-digit card or balance!"); }
-        }
+    if (card.length === 16 && acc.startsWith("UBI") && amt > 0 && amt <= users[current].bal) {
+        users[current].bal -= amt;
+        document.getElementById('uBal').innerText = `₹ ${users[current].bal.toLocaleString()}.00`;
+        
+        // DATE FIX (DD-MM-YYYY)
+        let d = new Date();
+        let formattedDate = `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}-${d.getFullYear()}`;
+        let formattedTime = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const tbody = document.getElementById('hBody');
+        const row = tbody.insertRow(0);
+        
+        // Roman Letters style setup
+        row.style.display = "table-row";
+        
+        row.innerHTML = `
+            <td style="font-family: 'Times New Roman', serif; font-weight: bold; letter-spacing: 1px;">
+                ${formattedDate} | ${formattedTime}
+            </td>
+            <td style="text-transform: uppercase; font-weight: 500;">${acc}</td>
+            <td style="text-align:right; color:#8e44ad; font-weight:bold;">-₹${amt}</td>
+        `;
+        
+        alert("Transaction Logged Successfully.");
+    } else { alert("Check 16-digit card or balance!"); }
+}
     </script>
 </body>
 </html>
