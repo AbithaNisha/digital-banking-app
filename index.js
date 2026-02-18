@@ -7,11 +7,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src', 'public')));
 
 app.post('/transfer', (req, res) => {
-    // SonarQube Fix: Optional chaining use panniruken (req.body?.amount)
+    // SonarQube Fix: Optional chaining (?) and direct destructuring
     const receiverAccount = req.body?.receiverAccount;
     const amount = req.body?.amount;
 
-    if (!receiverAccount || !receiverAccount.startsWith('UBI')) {
+    if (!receiverAccount?.startsWith('UBI')) {
         return res.status(400).json({ message: "Please enter a valid account number" });
     }
 
@@ -25,7 +25,7 @@ app.post('/transfer', (req, res) => {
 
     const transactionTime = `${formattedDate} ${formattedTime}`;
     
-    res.json({ 
+    return res.json({ 
         status: "Success", 
         time: transactionTime,
         transferAmount: amount 
