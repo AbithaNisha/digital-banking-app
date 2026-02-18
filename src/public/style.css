@@ -1,12 +1,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background: linear-gradient(rgba(0, 15, 40, 0.7), rgba(0, 15, 40, 0.7)), 
+    /* Image clear-a theriya overlay opacity-a kuraichachu */
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
                 url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed; /* Parallax effect */
     font-family: 'Inter', sans-serif;
-    color: white;
+    color: #000000; /* Contrast fix for SonarQube */
     height: 100vh;
     overflow: hidden;
 }
@@ -17,26 +19,30 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 30px 8%;
+    background: rgba(255, 255, 255, 0.1); /* Minimal blur for transparency */
 }
 
-.logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
-.logo span { color: #00a8ff; }
+.logo { font-size: 1.8rem; font-weight: 700; color: #000000; }
+.logo span { color: #8e44ad; }
 
+/* L56 FIX: SonarQube Contrast Issue */
+/* Light colors-a mathi dark-a kuduthuruken */
 .nav-links a {
-    color: white;
+    color: #000000 !important; /* Fixed: High contrast black */
     text-decoration: none;
     margin-left: 30px;
     font-size: 0.9rem;
-    transition: 0.3s;
+    font-weight: 700;
 }
 
 .nav-btn {
-    background: #00a8ff;
+    background: #8e44ad;
+    color: white !important;
     padding: 10px 25px;
     border-radius: 50px;
 }
 
-/* Hero Section (No Box) */
+/* Hero Section */
 .hero-container {
     height: 70vh;
     display: flex;
@@ -46,63 +52,29 @@ body {
     text-align: center;
 }
 
-h1 { font-size: 4rem; font-weight: 700; margin-bottom: 15px; }
-.highlight { color: #00a8ff; text-shadow: 0 0 20px rgba(0,168,255,0.5); }
-.subtitle { font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px; }
+h1 { font-size: 4rem; font-weight: 800; color: #000000; margin-bottom: 15px; }
+.highlight { color: #8e44ad; }
+.subtitle { font-size: 1.2rem; color: #2c3e50; font-weight: 600; margin-bottom: 40px; }
 
-/* Buttons */
-.primary-btn {
-    background: #00a8ff;
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
-}
-
-.secondary-btn {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 10px;
-}
-
-/* Glass Form Effect */
-.glass-form {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(15px);
-    padding: 40px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 400px;
-}
-
+/* L94 FIX: SonarQube Contrast Issue */
+/* Input box and Table content clarity */
 .premium-input {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: #ffffff;
+    border: 2px solid #000000; /* Fixed: Clear border for accessibility */
     border-radius: 10px;
+    color: #000000; /* Fixed: Dark text */
+    font-weight: 600;
+}
+
+.primary-btn {
+    background: #8e44ad;
     color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
 }
-
-.footer-info {
-    position: fixed;
-    bottom: 30px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    font-size: 0.8rem;
-    opacity: 0.6;
-}
-
-.back-link { cursor: pointer; margin-top: 15px; font-size: 0.8rem; opacity: 0.7; }
