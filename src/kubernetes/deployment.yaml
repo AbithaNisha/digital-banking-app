@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: digital-banking-app
 spec:
-  replicas: 2                # Run 2 copies of your app
+  replicas: 2
   selector:
     matchLabels:
       app: digital-banking-app
@@ -12,11 +12,21 @@ spec:
       labels:
         app: digital-banking-app
     spec:
+      # SonarQube Fix: Disable automounting service account token for security
+      automountServiceAccountToken: false 
       containers:
       - name: digital-banking-app
-        image: yourdockerhubusername/digital-banking-app:latest  # Replace with your Docker Hub username
+        image: abithanisha/digital-banking-app:v1 # 'latest' tag vendam, v1 nu kudunga
         ports:
-        - containerPort: 3000    # Port your Node.js app runs on
+        - containerPort: 3000
+        # SonarQube Fix: Added Resource Requests and Limits
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -28,5 +38,5 @@ spec:
     app: digital-banking-app
   ports:
     - protocol: TCP
-      port: 80         # Expose port 80 outside
-      targetPort: 3000 # Map to container port
+      port: 80
+      targetPort: 3000
