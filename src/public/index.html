@@ -3,71 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBI Bank | Premium Crystal</title>
+    <title>UBI Bank | Premium Light</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* SonarQube Contrast Fix: Using darker text colors (#222 instead of #333) */
         * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; transition: 0.3s; }
         
         body {
             margin: 0; padding: 0; min-height: 100vh;
-            /* HD Background Image */
-            background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070') no-repeat center center fixed;
+            /* LIGHT HD Background Image */
+            background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069') no-repeat center center fixed;
             background-size: cover; display: flex; flex-direction: column;
             position: relative;
         }
 
-        /* Light Glass Overlay - Background Image-ai light-aa kaatum */
+        /* LIGHT Glass Overlay - Makes the background very soft and bright */
         body::before { 
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(255, 255, 255, 0.65); 
+            background: rgba(255, 255, 255, 0.85); 
             z-index: 0; 
         }
 
         nav { 
             position: relative; z-index: 10;
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 8%; background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(10px); width: 100%; 
-            border-bottom: 1px solid rgba(142, 68, 173, 0.1); 
+            padding: 15px 8%; background: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(15px); width: 100%; 
+            border-bottom: 1px solid rgba(142, 68, 173, 0.15); 
         }
 
         .logo { font-size: 26px; font-weight: 700; color: #8e44ad; }
-        .nav-links button { background: none; border: none; margin-left: 20px; cursor: pointer; color: #333; font-weight: 600; }
+        .nav-links button { background: none; border: none; margin-left: 20px; cursor: pointer; color: #111; font-weight: 600; }
         .login-nav { background: #8e44ad !important; padding: 8px 25px; border-radius: 5px; color: white !important; }
 
         .page-container { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         
-        .hero h1 { font-size: 3.5rem; color: #2c3e50; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; color: #8e44ad; font-weight: 600; margin-bottom: 30px; }
+        .hero h3 { font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: #6c3483; font-weight: 600; margin-bottom: 30px; }
 
-        /* Premium Light Glass Card */
+        /* Pure White Glass Card */
         .glass-card { 
-            background: rgba(255, 255, 255, 0.9); 
-            border: 1px solid rgba(142, 68, 173, 0.2); 
-            border-radius: 15px; 
-            padding: 40px; width: 100%; max-width: 500px; color: #333;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center;
+            background: rgba(255, 255, 255, 0.95); 
+            border: 1px solid rgba(142, 68, 173, 0.1); 
+            border-radius: 20px; 
+            padding: 40px; width: 100%; max-width: 500px; color: #111;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); text-align: center;
         }
         
         .hidden { display: none; }
 
-        .action-btn { background: #8e44ad; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; }
-        .action-btn:hover { background: #732d91; transform: translateY(-2px); }
+        .action-btn { background: #8e44ad; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+        .action-btn:hover { background: #732d91; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3); }
 
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #ffffff; border: 1px solid #ddd; border-radius: 5px; color: #333; outline: none; }
-        input:focus { border-color: #8e44ad; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #fdfdfd; border: 1px solid #ccc; border-radius: 8px; color: #111; outline: none; }
+        input:focus { border-color: #8e44ad; box-shadow: 0 0 5px rgba(142, 68, 173, 0.2); }
 
-        /* Dashboard Items */
-        .balance-strip { background: linear-gradient(90deg, #8e44ad, #2c3e50); padding: 25px; border-radius: 10px; margin: 20px 0; color: white; display: flex; justify-content: space-between; align-items: center; }
-        #uBal { font-size: 2rem; font-weight: 700; color: #ffffff; }
+        .balance-strip { background: linear-gradient(135deg, #8e44ad, #5b2c6f); padding: 30px; border-radius: 15px; margin: 20px 0; color: white; display: flex; justify-content: space-between; align-items: center; }
+        #uBal { font-size: 2.2rem; font-weight: 700; color: #ffffff; }
 
         .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left; }
-        th { background: #f4f7f6; color: #8e44ad; padding: 12px; font-size: 12px; border-bottom: 2px solid #8e44ad; }
-        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+        th { background: #f8f9fa; color: #8e44ad; padding: 15px; font-size: 12px; border-bottom: 2px solid #8e44ad; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; color: #222; }
     </style>
 </head>
 <body>
-
     <nav>
         <div class="logo">UBI BANK</div>
         <div class="nav-links">
@@ -103,7 +102,7 @@
         <div id="dashboard" class="glass-card hidden" style="max-width: 800px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3>Welcome, <span id="uName" style="color:#8e44ad">User</span></h3>
-                <p style="font-size: 12px; color: #666;">ID: <span id="uAcc">UBI0000</span></p>
+                <p style="font-size: 12px; color: #222;">ID: <span id="uAcc">UBI0000</span></p>
             </div>
 
             <div class="balance-strip">
@@ -132,6 +131,7 @@
     </div>
 
     <script>
+        // Your existing script logic remains here...
         let users = {};
         let current = "";
 
