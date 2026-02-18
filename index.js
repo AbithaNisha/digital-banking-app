@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('node:path'); 
 const app = express();
-const PORT = process.env.PORT || 3000; // Hardcoded-ah illaama process port use panradhu best
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src', 'public')));
 
 app.post('/transfer', (req, res) => {
-    const { receiverAccount, amount } = req.body;
+    // SonarQube Fix: Optional chaining use panniruken (req.body?.amount)
+    const receiverAccount = req.body?.receiverAccount;
+    const amount = req.body?.amount;
 
-    // Validation
     if (!receiverAccount || !receiverAccount.startsWith('UBI')) {
         return res.status(400).json({ message: "Please enter a valid account number" });
     }
@@ -24,11 +25,10 @@ app.post('/transfer', (req, res) => {
 
     const transactionTime = `${formattedDate} ${formattedTime}`;
     
-    // SonarQube fix: console.log-ku pathila response-la anupunga
     res.json({ 
         status: "Success", 
         time: transactionTime,
-        transferAmount: amount // amount-ai use panniyachu, so error varathu
+        transferAmount: amount 
     });
 });
 
