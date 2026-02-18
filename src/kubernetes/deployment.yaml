@@ -12,21 +12,21 @@ spec:
       labels:
         app: digital-banking-app
     spec:
-      # SonarQube Fix: Disable automounting service account token for security
       automountServiceAccountToken: false 
       containers:
       - name: digital-banking-app
-        image: abithanisha/digital-banking-app:v1 # 'latest' tag vendam, v1 nu kudunga
+        image: abithanisha/digital-banking-app:v1
         ports:
         - containerPort: 3000
-        # SonarQube Fix: Added Resource Requests and Limits
         resources:
           requests:
             memory: "64Mi"
             cpu: "250m"
+            ephemeral-storage: "64Mi"  # <--- Ithu thaan SonarQube keta fix
           limits:
             memory: "128Mi"
             cpu: "500m"
+            ephemeral-storage: "128Mi" # <--- Ithu thaan SonarQube keta fix
 ---
 apiVersion: v1
 kind: Service
